@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Ezb\Collector;
 
+use App\Ezb\Response\Dto\CurrencyRate;
 use App\Ezb\Response\GetRatesResponse;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -31,6 +32,8 @@ class RateCollector
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      * @throws ValidationFailedException
+     *
+     * @phpstan-return Collection<int, CurrencyRate>
      */
     public function collect(): Collection
     {
@@ -50,6 +53,8 @@ class RateCollector
         if ($violations->count() > 0) {
             throw new ValidationFailedException('Response validation failed', $violations);
         }
+
+        // TODO: conversion
 
         return $response->getCurrencyRates();
     }

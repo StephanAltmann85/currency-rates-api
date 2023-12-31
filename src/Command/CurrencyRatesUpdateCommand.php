@@ -4,7 +4,6 @@ namespace App\Command;
 
 use App\Entity\Currency;
 use App\Ezb\Collector\RateCollector;
-use App\Ezb\Response\Dto\CurrencyRate;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -42,13 +41,13 @@ class CurrencyRatesUpdateCommand extends Command
         // TODO: call by handler (tag)
         $currencyRates = $this->collector->collect();
 
-        /** @var CurrencyRate $currencyRate */
-        foreach ($currencyRates as $currencyRate) {
-            // TODO: move
-            // TODO: should work on new and existing entities
-            $currency = (new Currency($currencyRate->getIso3()))->setRate($currencyRate->getRate());
-            $this->entityManager->persist($currency);
-        }
+        // TODO: move
+        // TODO: should work on new and existing entities
+        /*        foreach ($currencyRates as $currencyRate) {
+
+                    $currency = (new Currency($currencyRate->getIso3()))->setRate($currencyRate->getRate());
+                    $this->entityManager->persist($currency);
+                }*/
 
         $this->entityManager->flush();
 

@@ -68,10 +68,10 @@
             "@auto-scripts"
         ],
         "phpstan": [
-            "symfony php vendor/bin/phpstan"
+            "php vendor/bin/phpstan"
         ],
         "phpcs": [
-            "symfony php vendor/bin/php-cs-fixer"
+            "php vendor/bin/php-cs-fixer fix"
         ]
     },
     "conflict": {

@@ -44,8 +44,8 @@ class CurrencyRatesUpdateCommand extends Command
 
         /** @var CurrencyRate $currencyRate */
         foreach ($currencyRates as $currencyRate) {
-            //TODO: move
-            //TODO: should work on new and existing entities
+            // TODO: move
+            // TODO: should work on new and existing entities
             $currency = (new Currency($currencyRate->getIso3()))->setRate($currencyRate->getRate());
             $this->entityManager->persist($currency);
         }

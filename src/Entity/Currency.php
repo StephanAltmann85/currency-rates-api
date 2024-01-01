@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,9 +12,16 @@ use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 
+//TODO: fix swagger documentation
+
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 class Currency
 {
     // TODO: on update (only if value has changed -> preUpdate)

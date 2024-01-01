@@ -36,7 +36,7 @@ class CurrencyRatesUpdateCommand extends Command
 
         // TODO: error handling with channel
 
-        var_dump($currencies);
+        //var_dump($currencies);
 
         // TODO: move
         // TODO: should work on new and existing entities

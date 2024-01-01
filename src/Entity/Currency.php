@@ -8,37 +8,40 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Event\PrePersistEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 // TODO: fix swagger documentation
+// TODO: on update (only if value has changed -> preUpdate)
+// TODO: -> invalidate entity cache
+// TODO: store history
+// TODO: add serializer groups -> history on get not getCollection
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
-    ]
+        new Get(normalizationContext: ['groups' => ['currency:get']]),
+        new GetCollection(normalizationContext: ['groups' => ['currency:get-collection']]),
+    ],
 )]
 class Currency
 {
-    // TODO: on update (only if value has changed -> preUpdate)
-    // TODO: -> invalidate entity cache
-    // TODO: store history
-
     #[ORM\Id]
     #[ORM\Column(length: 3, unique: true)]
     private string $iso3;
 
+    #[Groups(['currency:get-collection', 'currency:get'])]
     #[ORM\Column(nullable: false)]
     private float $rate;
 
+    // TODO: pagination for subresource or limit, may link with iso-filter -> only latest
     /** @phpstan-var Collection<int,CurrencyRateHistory> */
+    #[Groups(['currency:get'])]
     #[ORM\OneToMany(mappedBy: 'currency', targetEntity: CurrencyRateHistory::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
     private Collection $history;
 
+    #[Groups(['currency:get-collection', 'currency:get'])]
     #[ORM\Column(nullable: false)]
     private \DateTime $updatedAt;
 
@@ -46,12 +49,6 @@ class Currency
     {
         $this->iso3 = $iso3;
         $this->history = new ArrayCollection();
-    }
-
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
-    public function setUpdatedAtOnCreationOrdUpdate(PrePersistEventArgs|PreUpdateEventArgs $eventArgs): void
-    {
         $this->updatedAt = new \DateTime();
     }
 
@@ -73,14 +70,14 @@ class Currency
     }
 
     /**
-     * @return Collection<int, CurrencyRateHistory>
+     * @phpstan-return Collection<int, CurrencyRateHistory>
      */
     public function getHistory(): Collection
     {
         return $this->history;
     }
 
-    public function addHistory(CurrencyRateHistory $history): static
+    public function addHistory(CurrencyRateHistory $history): Currency
     {
         if (!$this->history->contains($history)) {
             $this->history->add($history);
@@ -90,7 +87,7 @@ class Currency
         return $this;
     }
 
-    public function removeHistory(CurrencyRateHistory $history): static
+    public function removeHistory(CurrencyRateHistory $history): Currency
     {
         if ($this->history->removeElement($history)) {
             if ($history->getCurrency() === $this) {

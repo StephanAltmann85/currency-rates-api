@@ -13,7 +13,7 @@ class CurrencyRateHistory
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private ?int $id = null;
+    private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'history')]
     #[ORM\JoinColumn(referencedColumnName: 'iso3', nullable: false)]
@@ -25,7 +25,7 @@ class CurrencyRateHistory
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

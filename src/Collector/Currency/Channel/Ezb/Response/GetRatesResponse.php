@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Ezb\Response;
+namespace App\Collector\Currency\Channel\Ezb\Response;
 
-use App\Ezb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Channel\Ezb\Response\Dto\CurrencyRate;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Attribute\SerializedPath;

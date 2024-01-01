@@ -5,31 +5,43 @@ namespace App\Entity;
 use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Currency
 {
-    // TODO: on update (only if value has changed)
+    // TODO: on update (only if value has changed -> preUpdate)
     // TODO: -> invalidate entity cache
     // TODO: store history
-    // TODO: set updated at
 
     #[ORM\Id]
     #[ORM\Column(length: 3, unique: true)]
     private string $iso3;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: false)]
     private float $rate;
 
     /** @phpstan-var Collection<int,CurrencyRateHistory> */
     #[ORM\OneToMany(mappedBy: 'currency', targetEntity: CurrencyRateHistory::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
     private Collection $history;
 
+    #[ORM\Column(nullable: false)]
+    private \DateTime $updatedAt;
+
     public function __construct(string $iso3)
     {
         $this->iso3 = $iso3;
         $this->history = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAtOnCreationOrdUpdate(PrePersistEventArgs|PreUpdateEventArgs $eventArgs): void
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     public function getIso3(): string
@@ -48,8 +60,6 @@ class Currency
 
         return $this;
     }
-
-    // TODO: add updated at
 
     /**
      * @return Collection<int, CurrencyRateHistory>
@@ -72,11 +82,22 @@ class Currency
     public function removeHistory(CurrencyRateHistory $history): static
     {
         if ($this->history->removeElement($history)) {
-            // set the owning side to null (unless already changed)
             if ($history->getCurrency() === $this) {
                 $history->setCurrency(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): Currency
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

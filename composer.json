@@ -86,6 +86,9 @@
         ],
         "phpcs": [
             "php vendor/bin/php-cs-fixer fix"
+        ],
+        "test-units": [
+            "php vendor/bin/phpunit --testsuite unit"
         ]
     },
     "conflict": {

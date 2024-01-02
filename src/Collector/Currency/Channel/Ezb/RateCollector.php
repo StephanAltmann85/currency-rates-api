@@ -19,6 +19,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RateCollector implements RateCollectorInterface
 {
+    private const RESOURCE_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
+
     public function __construct(
         private readonly HttpClientInterface $client,
         private readonly SerializerInterface $serializer,
@@ -32,9 +34,8 @@ class RateCollector implements RateCollectorInterface
      */
     public function collect(): Collection
     {
-        // TODO: const or env
         try {
-            $content = $this->client->request('GET', 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
+            $content = $this->client->request('GET', self::RESOURCE_URL);
 
             $response = $this->serializer->deserialize(
                 $content->getContent(),

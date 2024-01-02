@@ -16,6 +16,7 @@ jobs:
         with:
           php_extensions: xdebug
           bootstrap: vendor/autoload.php
+          testsuite: unit
 
         env:
           XDEBUG_MODE: coverage

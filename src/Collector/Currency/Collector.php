@@ -26,11 +26,16 @@ class Collector
      *
      * @throws CollectDataException
      */
-    public function collect(): Collection
+    public function collect(string $channel = null): Collection
     {
+        // TODO: may move to command for error output or return struct with error details
         $currencies = new ArrayCollection();
 
         foreach ($this->collectors as $collector) {
+            if (null !== $channel && $channel !== $collector->getChannel()) {
+                continue;
+            }
+
             $currencies = new ArrayCollection(array_merge($currencies->toArray(), $collector->collect()->toArray()));
         }
 

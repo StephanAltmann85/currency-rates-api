@@ -11,37 +11,38 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-// TODO: fix swagger documentation
 // TODO: on update (only if value has changed -> preUpdate)
 // TODO: -> invalidate entity cache
 // TODO: store history
-// TODO: add serializer groups -> history on get not getCollection
+// TODO: resource history with iso -> 30 results
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: ['groups' => ['currency:get']]),
-        new GetCollection(normalizationContext: ['groups' => ['currency:get-collection']]),
+        new Get(),
+        new GetCollection(),
     ],
+    formats: ['json' => ['application/json'], 'csv' => ['text/csv']],
+    normalizationContext: ['groups' => ['currency:get']],
+    paginationEnabled: false
 )]
 class Currency
 {
+    #[Groups(['currency:get'])]
     #[ORM\Id]
     #[ORM\Column(length: 3, unique: true)]
     private string $iso3;
 
-    #[Groups(['currency:get-collection', 'currency:get'])]
+    #[Groups(['currency:get'])]
     #[ORM\Column(nullable: false)]
     private float $rate;
 
-    // TODO: pagination for subresource or limit, may link with iso-filter -> only latest
     /** @phpstan-var Collection<int,CurrencyRateHistory> */
-    #[Groups(['currency:get'])]
     #[ORM\OneToMany(mappedBy: 'currency', targetEntity: CurrencyRateHistory::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
     private Collection $history;
 
-    #[Groups(['currency:get-collection', 'currency:get'])]
+    #[Groups(['currency:get'])]
     #[ORM\Column(nullable: false)]
     private \DateTime $updatedAt;
 

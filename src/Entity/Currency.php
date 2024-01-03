@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 // TODO: finish unit tests
 // TODO: add integration tests
 // TODO: build docker image
+// TODO: update swagger endpoint descriptions
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 #[ORM\HasLifecycleCallbacks]

@@ -11,7 +11,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-// TODO: resource history with iso -> 30 results
+// TODO: add behat tests
+// TODO: finish unit tests
+// TODO: add integration tests
+// TODO: build docker image
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 #[ORM\HasLifecycleCallbacks]

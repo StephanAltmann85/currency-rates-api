@@ -2,11 +2,31 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use App\Repository\CurrencyRateHistoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CurrencyRateHistoryRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/currencies/{iso3}/history',
+            uriVariables: [
+                'iso3' => new Link(toProperty: 'currency', fromClass: Currency::class),
+            ],
+            requirements: ['iso3' => '[A-Z]{3}'],
+            paginationItemsPerPage: 28
+        ),
+    ],
+    formats: ['json' => ['application/json'], 'csv' => ['text/csv']],
+    normalizationContext: ['groups' => ['history:get']],
+    order: ['date' => 'DESC'],
+)]
+#[ORM\Cache(usage: 'READ_ONLY')]
 class CurrencyRateHistory
 {
     #[ORM\Id]
@@ -19,9 +39,11 @@ class CurrencyRateHistory
     #[ORM\JoinColumn(referencedColumnName: 'iso3', nullable: false)]
     private ?Currency $currency = null;
 
+    #[Groups(['history:get'])]
     #[ORM\Column]
     private ?float $rate = null;
 
+    #[Groups(['history:get'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 

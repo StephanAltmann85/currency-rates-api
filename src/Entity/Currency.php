@@ -11,9 +11,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-// TODO: on update (only if value has changed -> preUpdate)
-// TODO: -> invalidate entity cache
-// TODO: store history
 // TODO: resource history with iso -> 30 results
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
@@ -27,6 +24,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     normalizationContext: ['groups' => ['currency:get']],
     paginationEnabled: false
 )]
+#[ORM\Cache(usage: 'READ_ONLY')]
 class Currency
 {
     #[Groups(['currency:get'])]

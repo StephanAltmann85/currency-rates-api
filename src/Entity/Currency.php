@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 // TODO: add behat tests
 // TODO: finish unit tests
-// TODO: add integration tests
 // TODO: build docker image - with cron for update, run on staartup
 // TODO: update swagger endpoint descriptions
 

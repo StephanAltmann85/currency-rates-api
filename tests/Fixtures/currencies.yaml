@@ -1,0 +1,9 @@
+App\Entity\Currency:
+  currency_USD:
+    __construct:
+      iso3: USD
+    rate: 1.08
+  currency_TWD:
+    __construct:
+      iso3: TWD
+    rate: 10.8

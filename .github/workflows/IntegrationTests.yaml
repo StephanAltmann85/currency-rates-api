@@ -1,0 +1,51 @@
+on: [push]
+name: Integration-Tests
+jobs:
+  Behat:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.php-version == '8.3' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: pecl
+          coverage: xdebug
+
+      - name: Create Docker Universe
+        run: docker-compose up -d
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
+
+      - name: Install dependencies
+        if: ${{ matrix.php-version == '8.3' }}
+        run: composer install --prefer-dist --ignore-platform-req=php
+
+      - name: Install dependencies
+        if: ${{ matrix.php-version != '8.3' }}
+        run: composer install --prefer-dist
+
+      - name: Create Database
+        run: php bin/console assets:install --relative --symlink
+
+      - name: Create Database
+        run: APP_ENV=test bin/console doctrine:database:create
+
+      - name: Run migrations
+        run: APP_ENV=test bin/console doctrine:migrations:migrate
+
+      - name: run Tests
+        run: vendor/bin/phpunit --testsuite integration

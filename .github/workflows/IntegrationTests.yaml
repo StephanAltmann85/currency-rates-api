@@ -49,3 +49,6 @@ jobs:
 
       - name: run Tests
         run: vendor/bin/phpunit --testsuite integration
+
+        env:
+          XDEBUG_MODE: coverage

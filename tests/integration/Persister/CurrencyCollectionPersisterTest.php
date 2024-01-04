@@ -38,21 +38,21 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
     {
         $this->createTestCurrencies();
 
+        /** @phpstan-var Currency $currency1 */
         $currency1 = $this->entityManager->find(Currency::class, 'TS1');
+        /** @phpstan-var Currency $currency2 */
         $currency2 = $this->entityManager->find(Currency::class, 'TS2');
 
         $currency3 = (new Currency('TS3'))
             ->setRate(1)
             ->setUpdatedAt(new \DateTime('2001-01-01'));
 
-        /* @phpstan-var Currency $currency2 */
         $currency2->setRate(2);
 
         $currencies = new ArrayCollection([$currency1, $currency2, $currency3]);
 
         $this->persister->persist($currencies);
 
-        /* @phpstan-var Currency $currency1 */
         $this->entityManager->refresh($currency1);
 
         $this->entityManager->refresh($currency2);

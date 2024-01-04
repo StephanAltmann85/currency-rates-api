@@ -29,9 +29,6 @@ class RateCollector implements RateCollectorInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(): Collection
     {
         try {

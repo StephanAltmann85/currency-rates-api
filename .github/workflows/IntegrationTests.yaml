@@ -51,4 +51,4 @@ jobs:
         run: vendor/bin/phpunit --testsuite integration
 
         env:
-          XDEBUG_MODE: coverage
+          DATABASE_URL: mysql://root:root@127.0.0.1:3306/app_test?serverVersion=8.0&charset=utf8mb4

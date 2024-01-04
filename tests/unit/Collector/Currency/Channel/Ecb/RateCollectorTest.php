@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Collector\Currency\Channel\Ezb;
+namespace App\Tests\unit\Collector\Currency\Channel\Ecb;
 
-use App\Collector\Currency\Channel\Ezb\RateCollector;
-use App\Collector\Currency\Channel\Ezb\Response\Dto\CurrencyRate;
-use App\Collector\Currency\Channel\Ezb\Response\GetRatesResponse;
+use App\Collector\Currency\Channel\Ecb\RateCollector;
+use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\RateCollectorInterface;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- * @coversDefaultClass \App\Collector\Currency\Channel\Ezb\RateCollector
+ * @coversDefaultClass \App\Collector\Currency\Channel\Ecb\RateCollector
  **/
 class RateCollectorTest extends MockeryTestCase
 {
@@ -59,7 +59,7 @@ class RateCollectorTest extends MockeryTestCase
      */
     public function testGetChannel(): void
     {
-        $this->assertEquals('EZB', $this->rateCollector->getChannel());
+        $this->assertEquals('ECB', $this->rateCollector->getChannel());
     }
 
     /**

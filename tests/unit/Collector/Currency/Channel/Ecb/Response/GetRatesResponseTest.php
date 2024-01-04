@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Collector\Currency\Channel\Ezb\Response;
+namespace App\Tests\unit\Collector\Currency\Channel\Ecb\Response;
 
-use App\Collector\Currency\Channel\Ezb\Response\Dto\CurrencyRate;
-use App\Collector\Currency\Channel\Ezb\Response\GetRatesResponse;
+use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Tests\unit\TestCases\SetterGetterTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @coversDefaultClass \App\Collector\Currency\Channel\Ezb\Response\GetRatesResponse
+ * @coversDefaultClass \App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse
  **/
 class GetRatesResponseTest extends SetterGetterTestCase
 {

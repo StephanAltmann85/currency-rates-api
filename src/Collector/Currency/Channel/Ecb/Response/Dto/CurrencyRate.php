@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Collector\Currency\Channel\Ezb\Response\Dto;
+namespace App\Collector\Currency\Channel\Ecb\Response\Dto;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;

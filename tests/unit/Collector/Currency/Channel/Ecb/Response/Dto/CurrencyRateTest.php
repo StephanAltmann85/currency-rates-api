@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Collector\Currency\Channel\Ezb\Response\Dto;
+namespace App\Tests\unit\Collector\Currency\Channel\Ecb\Response\Dto;
 
-use App\Collector\Currency\Channel\Ezb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Tests\unit\TestCases\SetterGetterTestCase;
 
 /**
- * @coversDefaultClass \App\Collector\Currency\Channel\Ezb\Response\Dto\CurrencyRate
+ * @coversDefaultClass \App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate
  **/
 class CurrencyRateTest extends SetterGetterTestCase
 {

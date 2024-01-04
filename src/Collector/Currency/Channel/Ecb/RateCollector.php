@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Collector\Currency\Channel\Ezb;
+namespace App\Collector\Currency\Channel\Ecb;
 
-use App\Collector\Currency\Channel\Ezb\Response\Dto\CurrencyRate;
-use App\Collector\Currency\Channel\Ezb\Response\GetRatesResponse;
+use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\RateCollectorInterface;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
@@ -58,7 +58,7 @@ class RateCollector implements RateCollectorInterface
 
     public function getChannel(): string
     {
-        return 'EZB';
+        return 'ECB';
     }
 
     public static function getPriority(): int

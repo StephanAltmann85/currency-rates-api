@@ -89,7 +89,7 @@ class CurrencyRatesUpdateCommandTest extends TestCase
         $this->collector
             ->shouldReceive('collect')
             ->once()
-            ->with('EZB')
+            ->with('ECB')
             ->andReturn($currencies);
 
         $currencies
@@ -103,7 +103,7 @@ class CurrencyRatesUpdateCommandTest extends TestCase
             ->with($currencies)
             ->andReturn();
 
-        $result = $this->tester->execute(['command' => 'currency-rates:update', '--channel' => 'EZB']);
+        $result = $this->tester->execute(['command' => 'currency-rates:update', '--channel' => 'ECB']);
 
         $this->assertEmpty($this->tester->getDisplay());
         $this->assertEquals(Command::SUCCESS, $result);

@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 // TODO: add behat tests as soon as available for symfony 7 -> command + api endpoints
-// TODO: finish unit tests
-// TODO: build docker image - with cron for update, run on startup
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 #[ORM\HasLifecycleCallbacks]

@@ -48,8 +48,8 @@ class CurrencyUpdateEventListener
 
             $entityManager->persist($currencyRateHistory);
 
-            $logMetadata = $entityManager->getClassMetadata(CurrencyRateHistory::class);
-            $unitOfWork->computeChangeSet($logMetadata, $currencyRateHistory);
+            $classMetadata = $entityManager->getClassMetadata(CurrencyRateHistory::class);
+            $unitOfWork->computeChangeSet($classMetadata, $currencyRateHistory);
         }
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Collector\Currency\Collector;
-use App\Collector\Exception\CollectDataException;
 use App\Persister\CollectionPersister;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -29,9 +28,6 @@ class CurrencyRatesUpdateCommand extends Command
         $this->addOption('channel', 'c', InputArgument::OPTIONAL, 'Fetch data exclusively from specified channel');
     }
 
-    /**
-     * @throws CollectDataException
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Collecting data...', OutputInterface::VERBOSITY_VERBOSE);
@@ -44,8 +40,6 @@ class CurrencyRatesUpdateCommand extends Command
         $output->writeln('Persisting data...', OutputInterface::VERBOSITY_VERBOSE);
 
         $this->collectionPersister->persist($currencies);
-
-        // TODO: error handling + logging with channel
 
         return Command::SUCCESS;
     }

@@ -24,8 +24,3 @@ phpstan.neon
 ###< friendsofphp/php-cs-fixer ###
 
 coverage_html
-coverage.txt
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###

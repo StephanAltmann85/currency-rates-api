@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 // TODO: add behat tests
 // TODO: finish unit tests
 // TODO: add integration tests
-// TODO: build docker image
+// TODO: build docker image - with cron for update, run on staartup
 // TODO: update swagger endpoint descriptions
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
@@ -85,17 +85,6 @@ class Currency
         if (!$this->history->contains($history)) {
             $this->history->add($history);
             $history->setCurrency($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHistory(CurrencyRateHistory $history): Currency
-    {
-        if ($this->history->removeElement($history)) {
-            if ($history->getCurrency() === $this) {
-                $history->setCurrency(null);
-            }
         }
 
         return $this;

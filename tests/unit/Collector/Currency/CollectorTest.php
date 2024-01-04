@@ -6,15 +6,28 @@ namespace App\Tests\unit\Collector\Currency;
 
 use App\Collector\Currency\Collector;
 use App\Collector\Currency\RateCollectorInterface;
+use App\Collector\Exception\TransportException;
 use App\Entity\Currency;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery\MockInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * @coversDefaultClass \App\Collector\Currency\Collector
  **/
 class CollectorTest extends MockeryTestCase
 {
+    /** @phpstan-var LoggerInterface|MockInterface  */
+    private LoggerInterface $logger;
+
+    public function setUp(): void
+    {
+        $this->logger = \Mockery::mock(LoggerInterface::class);
+
+        parent::setUp();
+    }
+
     /**
      * @covers ::__construct
      * @covers ::collect
@@ -24,9 +37,9 @@ class CollectorTest extends MockeryTestCase
         $rateCollector1 = \Mockery::mock(RateCollectorInterface::class);
         $rateCollector2 = \Mockery::mock(RateCollectorInterface::class);
         $rateCollector3 = \Mockery::mock(RateCollectorInterface::class);
+        $rateCollector4 = \Mockery::mock(RateCollectorInterface::class);
 
-        /* @phpstan-ignore-next-line */
-        $collector = new Collector([$rateCollector1, $rateCollector2, $rateCollector3]);
+        $collector = new Collector([$rateCollector1, $rateCollector2, $rateCollector3, $rateCollector4], $this->logger);
 
         $currency1 = \Mockery::mock(Currency::class);
         $currency2 = \Mockery::mock(Currency::class);
@@ -40,12 +53,33 @@ class CollectorTest extends MockeryTestCase
         $rateCollector2
             ->shouldReceive('collect')
             ->once()
-            ->andReturn(new ArrayCollection([$currency2, $currency3]));
+            ->andThrows(new TransportException('Error!'));
+
+        $rateCollector2
+            ->shouldReceive('getChannel')
+            ->once()
+            ->andReturn('ERROR-CHANNEL');
 
         $rateCollector3
             ->shouldReceive('collect')
             ->once()
+            ->andReturn(new ArrayCollection([$currency2, $currency3]));
+
+        $rateCollector4
+            ->shouldReceive('collect')
+            ->once()
             ->andReturn(new ArrayCollection());
+
+        $this->logger
+            ->shouldReceive('error')
+            ->once()
+            ->with(
+                'An error occurred while collecting currency rates!',
+                [
+                    'channel' => 'ERROR-CHANNEL',
+                    'message' => 'Error!',
+                ]
+            );
 
         $result = $collector->collect();
 
@@ -65,8 +99,7 @@ class CollectorTest extends MockeryTestCase
         $rateCollector2 = \Mockery::mock(RateCollectorInterface::class);
         $rateCollector3 = \Mockery::mock(RateCollectorInterface::class);
 
-        /* @phpstan-ignore-next-line */
-        $collector = new Collector([$rateCollector1, $rateCollector2, $rateCollector3]);
+        $collector = new Collector([$rateCollector1, $rateCollector2, $rateCollector3], $this->logger);
 
         $currency1 = \Mockery::mock(Currency::class);
 
@@ -97,6 +130,10 @@ class CollectorTest extends MockeryTestCase
             ->shouldReceive('getChannel')
             ->once()
             ->andReturn('NO');
+
+        $this->logger
+            ->shouldReceive('error')
+            ->never();
 
         $result = $collector->collect('TEST');
 

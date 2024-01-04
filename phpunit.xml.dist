@@ -3,12 +3,11 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          executionOrder="depends,defects"
-         requireCoverageMetadata="true"
-         beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
          failOnWarning="true">
 
     <php>
+        <server name="KERNEL_CLASS" value="App\Kernel"/>
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
@@ -20,6 +19,9 @@
     <testsuites>
         <testsuite name="unit">
             <directory phpVersion="8.2.0" phpVersionOperator=">=">tests/unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory phpVersion="8.2.0" phpVersionOperator=">=">tests/integration</directory>
         </testsuite>
     </testsuites>
 

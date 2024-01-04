@@ -15,10 +15,6 @@ use Doctrine\ORM\Events;
 #[AsDoctrineListener(event: Events::onFlush)]
 class CurrencyUpdateEventListener
 {
-    public function __construct()
-    {
-    }
-
     public function onUpdate(Currency $currency): void
     {
         $currency->setUpdatedAt(new \DateTime());

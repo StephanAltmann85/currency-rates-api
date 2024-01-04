@@ -39,9 +39,6 @@ jobs:
         run: composer install --prefer-dist
 
       - name: Create Database
-        run: php bin/console assets:install --relative --symlink
-
-      - name: Create Database
         run: APP_ENV=test bin/console doctrine:database:create
 
       - name: Run migrations

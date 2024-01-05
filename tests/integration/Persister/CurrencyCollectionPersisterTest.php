@@ -54,7 +54,6 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
         $this->persister->persist($currencies);
 
         $this->entityManager->refresh($currency1);
-
         $this->entityManager->refresh($currency2);
         $this->entityManager->refresh($currency3);
 
@@ -66,6 +65,7 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
         /** @var \DateTime $currency2RateHistoryDate */
         $currency2RateHistoryDate = $currency2RateHistory->getDate();
 
+        $this->assertNotEquals('2000-01-01', $currency2->getUpdatedAt()->format('Y-m-d'));
         $this->assertEquals('2000-01-01', $currency2RateHistoryDate->format('Y-m-d'));
         $this->assertNotEmpty($currency2->getHistory());
 

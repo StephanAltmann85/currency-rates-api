@@ -4,6 +4,10 @@ jobs:
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [ '8.2', '8.3' ]
     steps:
       - uses: actions/checkout@master
       - uses: shivammathur/setup-php@v2

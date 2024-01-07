@@ -13,6 +13,10 @@ jobs:
           MYSQL_DATABASE: wordpress_test
         ports:
           - 3306
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [ '8.2', '8.3' ]
     steps:
       - uses: actions/checkout@v3
 

@@ -1,7 +1,7 @@
 on: [push]
-name: Integration-Tests
+name: Test
 jobs:
-  Integration-Tests:
+  integration:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.php-version == '8.3' }}
     strategy:

@@ -1,5 +1,5 @@
 on: [push]
-name: PHP-CS-Fixer
+name: Analyse
 jobs:
   php-cs-fixer:
     name: PHP-CS-Fixer

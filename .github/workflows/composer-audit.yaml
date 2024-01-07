@@ -1,5 +1,5 @@
 on: [push]
-name: Composer Audit Check
+name: Analyse
 jobs:
     composer-audit:
         runs-on: ubuntu-latest

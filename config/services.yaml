@@ -11,3 +11,12 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+when@test:
+    services:
+        Symfony\Contracts\HttpClient\HttpClientInterface:
+            class: Symfony\Component\HttpClient\MockHttpClient
+
+        test.data.storage:
+            alias: 'test.storage'
+            public: true

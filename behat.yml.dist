@@ -1,0 +1,8 @@
+default:
+    suites:
+        default:
+            paths:
+                - '%paths.base%/tests/behat/features'
+            contexts:
+                - App\Tests\behat\Context\DatabaseContext
+

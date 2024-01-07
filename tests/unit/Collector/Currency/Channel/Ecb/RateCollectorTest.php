@@ -8,6 +8,7 @@ use App\Collector\Currency\Channel\Ecb\RateCollector;
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\RateCollectorInterface;
+use App\Collector\Exception\CollectDataException;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
 use App\Entity\Currency;
@@ -73,6 +74,8 @@ class RateCollectorTest extends MockeryTestCase
     /**
      * @covers ::__construct
      * @covers ::collect
+     *
+     * @throws CollectDataException
      */
     public function testCollect(): void
     {
@@ -165,6 +168,8 @@ class RateCollectorTest extends MockeryTestCase
 
     /**
      * @covers ::collect
+     *
+     * @throws CollectDataException
      */
     public function testCollectWithExceptionCausedByClient(): void
     {
@@ -190,6 +195,8 @@ class RateCollectorTest extends MockeryTestCase
 
     /**
      * @covers ::collect
+     *
+     * @throws CollectDataException
      */
     public function testCollectWithConstraintViolations(): void
     {

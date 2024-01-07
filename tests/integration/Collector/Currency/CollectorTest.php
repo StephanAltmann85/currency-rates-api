@@ -8,6 +8,9 @@ use App\Collector\Currency\Collector;
 use App\Entity\Currency;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
+use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -26,33 +29,44 @@ class CollectorTest extends KernelTestCase
 
     private EntityManagerInterface $entityManager;
 
+    private FilesystemOperator $testDataStorage;
+
+    /**
+     * @throws Exception
+     */
     public function setUp(): void
     {
         self::bootKernel();
         $container = static::getContainer();
 
-        $this->httpClient = new MockHttpClient();
         $this->logger = $this->createMock(LoggerInterface::class);
-
-        $container->set(HttpClientInterface::class, $this->httpClient);
         $container->set('monolog.logger.currency_rates_update', $this->logger);
 
+        /** @var MockHttpClient $mockHttpClient */
+        $mockHttpClient = $container->get(HttpClientInterface::class);
         /** @var Collector $collector */
         $collector = $container->get(Collector::class);
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $container->get(EntityManagerInterface::class);
+        /** @var FilesystemOperator $testDataStorage */
+        $testDataStorage = $container->get('test.storage');
 
+        $this->httpClient = $mockHttpClient;
         $this->collector = $collector;
         $this->entityManager = $entityManager;
+        $this->testDataStorage = $testDataStorage;
 
         parent::setUp();
     }
 
+    /**
+     * @throws FilesystemException
+     */
     public function testCollect(): void
     {
         $this->createTestCurrency();
 
-        $mockResponse = new MockResponse((string) file_get_contents(__DIR__.'/../../Data/eurofxref-daily.xml'));
+        $mockResponse = new MockResponse($this->testDataStorage->read('Responses/eurofxref-daily.xml'));
 
         $this->httpClient->setResponseFactory($mockResponse);
 
@@ -67,9 +81,12 @@ class CollectorTest extends KernelTestCase
         $this->assertEquals('2000-01-01', $testCurrency->getUpdatedAt()->format('Y-m-d'));
     }
 
+    /**
+     * @throws FilesystemException
+     */
     public function testCollectWithInvalidData(): void
     {
-        $mockResponse = new MockResponse((string) file_get_contents(__DIR__.'/../../Data/eurofxref-daily_invalid.xml'));
+        $mockResponse = new MockResponse($this->testDataStorage->read('Responses/eurofxref-daily_invalid.xml'));
 
         $this->httpClient->setResponseFactory($mockResponse);
 

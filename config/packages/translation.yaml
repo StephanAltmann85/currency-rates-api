@@ -1,0 +1,10 @@
+## Package is currently just required by behat, hence we should not activate it on prod environment.
+when@dev: &dev
+    framework:
+        default_locale: en
+        translator:
+            default_path: '%kernel.project_dir%/translations'
+            fallbacks:
+                - en
+
+when@test: *dev

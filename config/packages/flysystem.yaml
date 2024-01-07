@@ -1,0 +1,9 @@
+when@dev: &dev
+    flysystem:
+        storages:
+            test.storage:
+                adapter: 'local'
+                options:
+                    directory: '%kernel.project_dir%/tests/TestData'
+
+when@test: *dev

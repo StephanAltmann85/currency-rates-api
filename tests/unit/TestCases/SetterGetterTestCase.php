@@ -21,6 +21,9 @@ abstract class SetterGetterTestCase extends MockeryTestCase
         $object->$setter($value);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function setByReflection(object $entity, string $property, mixed $value): void
     {
         $class = new \ReflectionClass($entity);

@@ -29,6 +29,8 @@ jobs:
           bootstrap: vendor/autoload.php
           testsuite: unit
           coverage_clover: clover.xml
+        env:
+          XDEBUG_MODE: coverage
 
       - name: Generate test coverage badge
         uses: timkrase/phpunit-coverage-badge@v1.2.0

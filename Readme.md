@@ -30,5 +30,5 @@ CSV: Header 'accept: text/csv'
 
 ## Update currency rates
 ```
-bin console currency-rates:update
+bin/console currency-rates:update
 ```

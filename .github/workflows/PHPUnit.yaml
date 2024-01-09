@@ -32,7 +32,7 @@ jobs:
           XDEBUG_MODE: coverage
 
       - name: Generate test coverage badge
-        if: matrix.version == '8.3'
+        if: matrix.php-version == '8.3'
         uses: timkrase/phpunit-coverage-badge@v1.2.0
         with:
           coverage_badge_path: 'badge-coverage.svg'

@@ -1,3 +1,5 @@
+![Code Coverage Badge](./badge-coverage.svg)
+
 # CurrencyRates-Api
 
 A simple API providing currency rates fetched from [https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml). 

@@ -8,15 +8,18 @@ use App\Entity\Currency;
 use App\Entity\CurrencyRateHistory;
 use App\Persister\CollectionPersister;
 use App\Persister\CurrencyCollectionPersister;
+use App\Tests\integration\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\ToolsException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class CurrencyCollectionPersisterTest extends KernelTestCase
 {
-    private CollectionPersister $persister;
+    use DatabaseTrait;
 
-    private EntityManagerInterface $entityManager;
+    private CollectionPersister $persister;
 
     public function setUp(): void
     {
@@ -27,13 +30,19 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
         $persister = $container->get(CurrencyCollectionPersister::class);
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $container->get(EntityManagerInterface::class);
+        /** @var SchemaTool $schemaTool */
+        $schemaTool = $container->get(SchemaTool::class);
 
         $this->persister = $persister;
         $this->entityManager = $entityManager;
+        $this->schemaTool = $schemaTool;
 
         parent::setUp();
     }
 
+    /**
+     * @throws ToolsException
+     */
     public function testPersist(): void
     {
         $this->createTestCurrencies();
@@ -73,28 +82,12 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
         $this->assertEmpty($currency3->getHistory());
     }
 
+    /**
+     * @throws ToolsException
+     */
     private function createTestCurrencies(): void
     {
-        $currency1 = $this->entityManager->find(Currency::class, 'TS1');
-        $currency2 = $this->entityManager->find(Currency::class, 'TS2');
-        $currency3 = $this->entityManager->find(Currency::class, 'TS3');
-
-        if (null !== $currency1) {
-            $this->entityManager->remove($currency1);
-            $this->entityManager->flush();
-        }
-
-        if (null !== $currency2) {
-            $this->entityManager->remove($currency2);
-            $this->entityManager->flush();
-        }
-
-        if (null !== $currency3) {
-            $this->entityManager->remove($currency3);
-            $this->entityManager->flush();
-        }
-
-        $this->entityManager->flush();
+        $this->resetDatabase();
 
         $currency1 = (new Currency('TS1'))
             ->setRate(1)

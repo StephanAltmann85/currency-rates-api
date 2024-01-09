@@ -6,8 +6,11 @@ namespace App\Tests\integration\Collector\Currency;
 
 use App\Collector\Currency\Collector;
 use App\Entity\Currency;
+use App\Tests\integration\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\ToolsException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\Exception;
@@ -20,14 +23,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CollectorTest extends KernelTestCase
 {
+    use DatabaseTrait;
+
     private MockHttpClient $httpClient;
 
     private Collector $collector;
 
     /** @phpstan-var LoggerInterface|MockObject)  */
     private LoggerInterface $logger;
-
-    private EntityManagerInterface $entityManager;
 
     private FilesystemOperator $testDataStorage;
 
@@ -50,17 +53,21 @@ class CollectorTest extends KernelTestCase
         $entityManager = $container->get(EntityManagerInterface::class);
         /** @var FilesystemOperator $testDataStorage */
         $testDataStorage = $container->get('test.storage');
+        /** @var SchemaTool $schemaTool */
+        $schemaTool = $container->get(SchemaTool::class);
 
         $this->httpClient = $mockHttpClient;
         $this->collector = $collector;
         $this->entityManager = $entityManager;
         $this->testDataStorage = $testDataStorage;
+        $this->schemaTool = $schemaTool;
 
         parent::setUp();
     }
 
     /**
      * @throws FilesystemException
+     * @throws ToolsException
      */
     public function testCollect(): void
     {
@@ -128,14 +135,12 @@ class CollectorTest extends KernelTestCase
         $this->assertCount(0, $result);
     }
 
+    /**
+     * @throws ToolsException
+     */
     private function createTestCurrency(): void
     {
-        $currency = $this->entityManager->find(Currency::class, 'TST');
-
-        if (null !== $currency) {
-            $this->entityManager->remove($currency);
-            $this->entityManager->flush();
-        }
+        $this->resetDatabase();
 
         $currency = (new Currency('TST'))
             ->setRate(1)

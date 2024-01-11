@@ -25,3 +25,5 @@ phpstan.neon
 ###< friendsofphp/php-cs-fixer ###
 
 coverage_html
+coverage_unit
+coverage_behat

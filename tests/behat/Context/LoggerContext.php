@@ -15,7 +15,7 @@ class LoggerContext implements Context
     private string $logContent = '';
 
     public function __construct(
-        private readonly FilesystemOperator $logFileStorage,
+        private readonly FilesystemOperator $testStorage,
     ) {
     }
 
@@ -26,7 +26,7 @@ class LoggerContext implements Context
      */
     public function theLogFileHasBeenDeleted(string $fileName): void
     {
-        $this->logFileStorage->delete($fileName);
+        $this->testStorage->delete($fileName);
         $this->logContent = '';
     }
 
@@ -37,8 +37,8 @@ class LoggerContext implements Context
      */
     public function iReadTheLogFile(string $fileName): void
     {
-        Assert::true($this->logFileStorage->fileExists($fileName));
-        $this->logContent = $this->logFileStorage->read($fileName);
+        Assert::true($this->testStorage->fileExists($fileName));
+        $this->logContent = $this->testStorage->read($fileName);
     }
 
     /**

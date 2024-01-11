@@ -5,4 +5,19 @@ default:
                 - '%paths.base%/tests/behat/features'
             contexts:
                 - App\Tests\behat\Context\DatabaseContext
+                - App\Tests\behat\Context\ApiContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            kernel:
+                environment: test
+            bootstrap: tests/bootstrap.php
+        DVDoug\Behat\CodeCoverage\Extension:
+            reports:
+                html:
+                    target: './coverage_behat'
+            filter:
+                include:
+                    directories:
+                        'src':
 

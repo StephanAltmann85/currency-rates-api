@@ -14,6 +14,14 @@ services:
 
 when@test:
     services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+            public: true
+
+        App\Tests\behat\Context\:
+            resource: '../tests/behat/Context/*'
+
         Symfony\Contracts\HttpClient\HttpClientInterface:
             class: Symfony\Component\HttpClient\MockHttpClient
 

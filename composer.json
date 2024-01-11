@@ -33,8 +33,9 @@
         "symfony/yaml": "7.0.*"
     },
     "require-dev": {
-        "behat/behat": "3.x-dev",
         "doctrine/doctrine-fixtures-bundle": "^3.5",
+        "dvdoug/behat-code-coverage": "^5.3",
+        "friends-of-behat/symfony-extension": "^2.5",
         "friendsofphp/php-cs-fixer": "^3.45",
         "hautelook/alice-bundle": "^2.13",
         "league/flysystem-bundle": "^3.3",
@@ -95,10 +96,13 @@
             "php vendor/bin/php-cs-fixer fix"
         ],
         "test-units": [
-            "php vendor/bin/phpunit --testsuite unit --coverage-html coverage_html"
+            "php vendor/bin/phpunit --testsuite unit --coverage-html coverage_unit"
         ],
         "test-integration": [
             "php vendor/bin/phpunit --testsuite integration"
+        ],
+        "test-behat": [
+            "php vendor/bin/behat"
         ]
     },
     "conflict": {

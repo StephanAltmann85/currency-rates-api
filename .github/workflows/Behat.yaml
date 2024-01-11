@@ -35,7 +35,7 @@ jobs:
         run: APP_ENV=test bin/console doctrine:migrations:migrate
 
       - name: run Tests
-        run: APP_ENV=test vendor/bin/phpunit
+        run: APP_ENV=test vendor/bin/behat
 
         env:
           DATABASE_URL: mysql://root:root@127.0.0.1:3306/app_test?serverVersion=8.0&charset=utf8mb4

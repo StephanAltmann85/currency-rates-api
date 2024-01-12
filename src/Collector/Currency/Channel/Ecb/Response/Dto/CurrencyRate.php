@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Collector\Currency\Channel\Ecb\Response\Dto;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;

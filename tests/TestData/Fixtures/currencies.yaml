@@ -9,6 +9,11 @@ App\Entity\Currency:
       iso3: TWD
     rate: 10.8
     updatedAt: <(new DateTime('2020-01-01T12:00:00'))>
+  currency_TST:
+    __construct:
+      iso3: TST
+    rate: 1
+    updatedAt: <(new DateTime('2020-01-01T12:00:00'))>
 
 App\Entity\CurrencyRateHistory:
   currency_rate_history_1:

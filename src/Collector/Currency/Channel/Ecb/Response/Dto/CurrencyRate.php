@@ -34,8 +34,12 @@ class CurrencyRate
         return $this->rate;
     }
 
-    public function setRate(?float $rate): CurrencyRate
+    public function setRate(float|int|null $rate): CurrencyRate
     {
+        if (null !== $rate) {
+            $rate = (float) $rate;
+        }
+
         $this->rate = $rate;
 
         return $this;

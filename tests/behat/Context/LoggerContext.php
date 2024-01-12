@@ -8,6 +8,7 @@ use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Webmozart\Assert\Assert;
 
 class LoggerContext implements Context
@@ -15,7 +16,8 @@ class LoggerContext implements Context
     private string $logContent = '';
 
     public function __construct(
-        private readonly FilesystemOperator $testStorage,
+        #[Autowire(service: 'logFile.storage')]
+        private readonly FilesystemOperator $logFileStorage,
     ) {
     }
 
@@ -26,7 +28,7 @@ class LoggerContext implements Context
      */
     public function theLogFileHasBeenDeleted(string $fileName): void
     {
-        $this->testStorage->delete($fileName);
+        $this->logFileStorage->delete($fileName);
         $this->logContent = '';
     }
 
@@ -37,8 +39,18 @@ class LoggerContext implements Context
      */
     public function iReadTheLogFile(string $fileName): void
     {
-        Assert::true($this->testStorage->fileExists($fileName));
-        $this->logContent = $this->testStorage->read($fileName);
+        Assert::true($this->logFileStorage->fileExists($fileName));
+        $this->logContent = $this->logFileStorage->read($fileName);
+    }
+
+    /**
+     * @Then the log file :name does not exist
+     *
+     * @throws FilesystemException
+     */
+    public function theLogFileDoesNotExist(string $fileName): void
+    {
+        Assert::false($this->logFileStorage->fileExists($fileName));
     }
 
     /**

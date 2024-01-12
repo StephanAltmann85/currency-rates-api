@@ -6,6 +6,10 @@ default:
             contexts:
                 - App\Tests\behat\Context\DatabaseContext
                 - App\Tests\behat\Context\ApiContext
+                - App\Tests\behat\Context\ClientContext
+                - App\Tests\behat\Context\LoggerContext
+                - App\Tests\behat\Context\CommandContext
+                - App\Tests\behat\Context\CurrencyContext
 
     extensions:
         FriendsOfBehat\SymfonyExtension:

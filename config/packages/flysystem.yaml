@@ -5,5 +5,9 @@ when@dev: &dev
                 adapter: 'local'
                 options:
                     directory: '%kernel.project_dir%/tests/TestData'
+            logFile.storage:
+                adapter: 'local'
+                options:
+                    directory: '%kernel.project_dir%/var/log'
 
 when@test: *dev

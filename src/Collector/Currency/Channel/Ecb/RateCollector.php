@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RateCollector implements RateCollectorInterface
@@ -40,7 +39,7 @@ class RateCollector implements RateCollectorInterface
                 'xml',
                 [XmlEncoder::ROOT_NODE_NAME => 'gesmes:Envelope']
             );
-        } catch (ExceptionInterface $exception) {
+        } catch (\Throwable $exception) {
             throw new TransportException($exception->getMessage(), $exception->getCode(), $exception);
         }
 

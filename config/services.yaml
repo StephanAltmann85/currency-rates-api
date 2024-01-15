@@ -27,8 +27,5 @@ when@test:
 
         test.data.storage:
             alias: 'test.storage'
-            public: true
 
         Doctrine\ORM\Tools\SchemaTool:
-            autowire: true
-            public: true

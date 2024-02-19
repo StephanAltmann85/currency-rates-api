@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    command: >
+      sh -c "composer install --no-dev"
+    restart: unless-stopped
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+    volumes:
+      - ./:/var/www
+      - ./docker/logs/php-fpm:/var/log/php-fpm
+      #TODO: link logs
+      #TODO: cronjobs
+      #TODO: php settings
+      #TODO: enable logging
+      #TODO: composer install on startup
+      #TODO: set envs at prod
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - php-fpm
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/logs/nginx:/var/log/nginx
+
+
+  #TODO: randomize password, do not expose
+  database:
+    image: 'mysql:8.3.0'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+    ports:
+      - '3306'
+      #TODO: random password, do not expose

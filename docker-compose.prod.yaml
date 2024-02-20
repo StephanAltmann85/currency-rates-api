@@ -1,11 +1,23 @@
 version: '3.7'
 services:
-  php-fpm:
+  setup:
     build:
       context: ./docker/php-fpm
     command: >
-      sh -c "composer install --no-dev"
+      sh -c "composer install --no-dev --no-progress --no-interaction --prefer-dist &&
+             composer dump-autoload --optimize --apcu --no-dev &&
+             composer dump-env prod"
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+    volumes:
+      - ./:/var/www
+
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
     restart: unless-stopped
+    depends_on:
+      - setup
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
     volumes:
@@ -15,7 +27,6 @@ services:
       #TODO: cronjobs
       #TODO: php settings
       #TODO: enable logging
-      #TODO: composer install on startup
       #TODO: set envs at prod
   nginx:
     image: nginx:alpine

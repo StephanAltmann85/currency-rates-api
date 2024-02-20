@@ -32,3 +32,8 @@ CSV: Header 'accept: text/csv'
 ```
 bin/console currency-rates:update
 ```
+
+## Run on production
+```
+docker compose -f docker-compose.prod.yaml up --build -d
+```

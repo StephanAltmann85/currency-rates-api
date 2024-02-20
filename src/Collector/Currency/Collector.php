@@ -26,7 +26,7 @@ class Collector
     /**
      * @return Collection<int, Currency>
      */
-    public function collect(string $channel = null): Collection
+    public function collect(?string $channel = null): Collection
     {
         $currencies = new ArrayCollection();
 

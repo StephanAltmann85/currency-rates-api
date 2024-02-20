@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  setup:
+  setup-php:
     build:
       context: ./docker/php-fpm
     command: >
@@ -12,22 +12,62 @@ services:
     volumes:
       - ./:/var/www
 
+  database:
+    image: 'mysql:8.3.0'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+
+  setup-db:
+    build:
+      context: ./docker/php-fpm
+    depends_on:
+      - setup-php
+      - database
+    environment:
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+    command: >
+      sh -c "sleep 30 &&
+             bin/console doctrine:database:create --if-not-exists &&
+             bin/console doctrine:migrations:migrate --no-interaction &&
+             bin/console currency-rates:update"
+    volumes:
+      - ./:/var/www
+
   php-fpm:
     build:
       context: ./docker/php-fpm
     restart: unless-stopped
     depends_on:
-      - setup
+      - setup-php
+      - database
     environment:
-      - COMPOSER_MEMORY_LIMIT=-1
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+    volumes:
+      - ./:/var/www
+      - ./docker/logs/php-fpm:/var/log/php-fpm
+
+  php-cron:
+    build:
+      context: ./docker/cron
+    restart: unless-stopped
+    depends_on:
+      - setup-php
+      - database
+      - setup-db
+    environment:
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
     volumes:
       - ./:/var/www
       - ./docker/logs/php-fpm:/var/log/php-fpm
       #TODO: link logs
-      #TODO: cronjobs
-      #TODO: php settings
+      #TODO: php settings - execution time, memory-limit
       #TODO: enable logging
-      #TODO: set envs at prod
+      #TODO: configure caches - opcache, apcu
+      #TODO: random password?
+      #TODO: persist database
+
   nginx:
     image: nginx:alpine
     restart: unless-stopped
@@ -39,15 +79,3 @@ services:
       - ./:/var/www
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/logs/nginx:/var/log/nginx
-
-
-  #TODO: randomize password, do not expose
-  database:
-    image: 'mysql:8.3.0'
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: app
-    ports:
-      - '3306'
-      #TODO: random password, do not expose

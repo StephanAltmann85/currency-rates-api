@@ -64,7 +64,7 @@ services:
       #TODO: link logs
       #TODO: php settings - execution time, memory-limit
       #TODO: enable logging
-      #TODO: configure caches - opcache, apcu
+      #TODO: configure caches - opcache, apcu -> https://symfony.com/doc/current/performance.html
       #TODO: random password?
       #TODO: persist database
 

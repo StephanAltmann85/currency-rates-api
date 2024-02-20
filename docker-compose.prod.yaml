@@ -5,7 +5,7 @@ services:
       context: ./docker/php-fpm
     command: >
       sh -c "composer install --no-dev --no-progress --no-interaction --prefer-dist &&
-             composer dump-autoload --optimize --apcu --no-dev &&
+             composer dump-autoload --no-dev --classmap-authoritative &&
              composer dump-env prod"
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
@@ -47,6 +47,8 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/logs/php-fpm:/var/log/php-fpm
+      - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
+      - ./docker/php-config/ini/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
 
   php-cron:
     build:
@@ -61,10 +63,10 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/logs/php-fpm:/var/log/php-fpm
+      - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
+      - ./docker/php-config/ini/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
       #TODO: link logs
-      #TODO: php settings - execution time, memory-limit
       #TODO: enable logging
-      #TODO: configure caches - opcache, apcu -> https://symfony.com/doc/current/performance.html
       #TODO: random password?
       #TODO: persist database
 

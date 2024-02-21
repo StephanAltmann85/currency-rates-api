@@ -18,6 +18,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: app
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   setup-db:
     build:
@@ -46,7 +48,6 @@ services:
       - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
     volumes:
       - ./:/var/www
-      - ./docker/logs/php-fpm:/var/log/php-fpm
       - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
       - ./docker/php-config/ini/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
 
@@ -62,13 +63,8 @@ services:
       - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
     volumes:
       - ./:/var/www
-      - ./docker/logs/php-fpm:/var/log/php-fpm
       - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
       - ./docker/php-config/ini/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
-      #TODO: link logs
-      #TODO: enable logging
-      #TODO: random password?
-      #TODO: persist database
 
   nginx:
     image: nginx:alpine
@@ -81,3 +77,6 @@ services:
       - ./:/var/www
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/logs/nginx:/var/log/nginx
+
+volumes:
+  mysql-data:

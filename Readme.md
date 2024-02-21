@@ -35,7 +35,10 @@ bin/console currency-rates:update
 
 ## Build and run on production
 ```
+git clone https://github.com/StephanAltmann85/currency-rates-api.git
+cd currency-rates-api
+
 docker compose -f docker-compose.prod.yaml up --build -d
-#OR
+#[OR]
 docker-compose -f docker-compose.prod.yaml up --build -d
 ```

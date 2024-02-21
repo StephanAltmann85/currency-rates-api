@@ -30,5 +30,3 @@ coverage_behat
 
 docker/logs/nginx/*
 !docker/logs/nginx/.gitkeep
-docker/logs/php-fpm/*
-!docker/logs/php-fpm/.gitkeep

@@ -29,3 +29,8 @@ when@test:
             alias: 'test.storage'
 
         Doctrine\ORM\Tools\SchemaTool:
+
+when@prod:
+    parameters:
+        .container.dumper.inline_factories: true
+        debug.container.dump: false

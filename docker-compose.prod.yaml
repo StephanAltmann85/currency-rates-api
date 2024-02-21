@@ -1,0 +1,82 @@
+version: '3.7'
+services:
+  setup-php:
+    build:
+      context: ./docker/php-fpm
+    command: >
+      sh -c "composer install --no-dev --no-progress --no-interaction --prefer-dist &&
+             composer dump-autoload --no-dev --classmap-authoritative &&
+             composer dump-env prod"
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+    volumes:
+      - ./:/var/www
+
+  database:
+    image: 'mysql:8.3.0'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  setup-db:
+    build:
+      context: ./docker/php-fpm
+    depends_on:
+      - setup-php
+      - database
+    environment:
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+    command: >
+      sh -c "sleep 30 &&
+             bin/console doctrine:database:create --if-not-exists &&
+             bin/console doctrine:migrations:migrate --no-interaction &&
+             bin/console currency-rates:update"
+    volumes:
+      - ./:/var/www
+
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    restart: unless-stopped
+    depends_on:
+      - setup-php
+      - database
+    environment:
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+    volumes:
+      - ./:/var/www
+      - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
+      - ./docker/php-config/ini/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+
+  php-cron:
+    build:
+      context: ./docker/cron
+    restart: unless-stopped
+    depends_on:
+      - setup-php
+      - database
+      - setup-db
+    environment:
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+    volumes:
+      - ./:/var/www
+      - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
+      - ./docker/php-config/ini/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - php-fpm
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/logs/nginx:/var/log/nginx
+
+volumes:
+  mysql-data:

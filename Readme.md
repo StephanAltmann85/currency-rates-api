@@ -34,6 +34,7 @@ bin/console currency-rates:update
 ```
 
 ## Build and run on production
+Project (packages and database) will be setup on startup inside the container.
 ```
 git clone https://github.com/StephanAltmann85/currency-rates-api.git
 cd currency-rates-api

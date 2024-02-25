@@ -35,6 +35,7 @@ bin/console currency-rates:update
 
 ## Build and run on production
 Project (packages and database) will be setup on startup inside the container.
+
 ```
 git clone https://github.com/StephanAltmann85/currency-rates-api.git
 cd currency-rates-api
@@ -43,3 +44,5 @@ docker compose -f docker-compose.prod.yaml up --build -d
 #[OR]
 docker-compose -f docker-compose.prod.yaml up --build -d
 ```
+
+Access via `http://{SERVER_IP}:8000/api/docs`

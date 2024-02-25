@@ -45,4 +45,4 @@ docker compose -f docker-compose.prod.yaml up --build -d
 docker-compose -f docker-compose.prod.yaml up --build -d
 ```
 
-Access via `http://{SERVER_IP}:8000/api/docs`
+Access via `http://{SERVER_IP}:8080/api/docs`

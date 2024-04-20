@@ -10,11 +10,10 @@ jobs:
       - name: Create Docker Universe
         run: docker compose -f docker-compose.prod.yaml up --build -d
 
-      - name: Debug
+      - name: Wait for setup
         run: |
           docker compose wait setup-php
           docker compose wait setup-db
-          docker compose wait php-cron
           sudo chmod -R 777 ./var
 
       - uses: mydea/action-wait-for-api@v1

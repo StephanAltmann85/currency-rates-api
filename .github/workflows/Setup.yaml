@@ -16,7 +16,10 @@ jobs:
           docker compose wait setup-db
 
       - name: Debug
-        run: curl  http://localhost:8080/api/currencies/USD
+        run: curl -I http://localhost:8080/api/currencies/USD
+
+      - name: Debug
+        run: cat var/log/prod-2024-04-20.log
 
       - uses: mydea/action-wait-for-api@v1
         with:
@@ -43,4 +46,6 @@ jobs:
 
       - name: Check api resource (history)
         run: |
-          curl -s http://localhost:8080/api/currencies/USD/history
+          curl -I http://localhost:8080/api/currencies
+          curl -I http://localhost:8080/api/currencies/USD
+          curl -I http://localhost:8080/api/currencies/USD/history

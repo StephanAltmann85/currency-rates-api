@@ -14,12 +14,15 @@ jobs:
         run: |
           docker compose wait setup-php
           docker compose wait setup-db
+          chmod -R 777 ./var
 
       - name: Debug
         run: curl -I http://localhost:8080/api/currencies/USD
 
       - name: Debug
-        run: cat var/log/prod-2024-04-20.log
+        run: ls -la var/cache
+      - name: Debug
+        run: ls -la var/log
 
       - uses: mydea/action-wait-for-api@v1
         with:

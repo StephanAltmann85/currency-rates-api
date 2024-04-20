@@ -23,7 +23,7 @@
       <directory phpVersion="8.3.0" phpVersionOperator="&gt;=">tests/integration</directory>
     </testsuite>
   </testsuites>
-  <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
+  <source>
     <include>
       <directory>src</directory>
     </include>

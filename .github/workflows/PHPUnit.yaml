@@ -17,7 +17,7 @@ jobs:
         uses: php-actions/phpunit@v3
         with:
           php_extensions: xdebug
-          bootstrap: vendor/autoload.php
+          bootstrap: tests/bootstrap.php
           testsuite: unit
           coverage_clover: clover.xml
         env:

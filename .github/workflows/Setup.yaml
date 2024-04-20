@@ -11,6 +11,8 @@ jobs:
         run: docker compose -f docker-compose.prod.yaml up --build -d --wait --wait-timeout 120
 
       - name: Debug
+        run: docker compose wait setup-php
+      - name: Debug
         run: docker compose wait setup-db
       - name: Debug
         run: ls -la vendor

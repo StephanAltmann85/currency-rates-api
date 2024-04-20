@@ -2,12 +2,16 @@ on: [push]
 name: Test
 jobs:
   setup:
+    name: Setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Create Docker Universe
         run: docker compose -f docker-compose.prod.yaml up --build -d --wait --wait-timeout 60
+
+      - name: Check installation
+        run: ls -la vendor
 
       - name: Check api docs
         run: curl -I http://localhost:8080/api/docs

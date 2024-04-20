@@ -2,6 +2,7 @@ on: [push]
 name: Test
 jobs:
   behat:
+    name: Behat
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

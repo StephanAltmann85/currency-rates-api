@@ -2,6 +2,7 @@ on: [push]
 name: Analyse
 jobs:
     composer-audit:
+        name: Composer Audit
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4

@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   unit:
+    name: Units
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

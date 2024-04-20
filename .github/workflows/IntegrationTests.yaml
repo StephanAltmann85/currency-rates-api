@@ -2,6 +2,7 @@ on: [push]
 name: Test
 jobs:
   integration:
+    name: Integration
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

@@ -13,9 +13,11 @@ jobs:
       - name: Debug
         run: ls -la vendor
       - name: Debug
-        run: sleep 100
+        run: sleep 150
       - name: Debug
         run: ls -la vendor
+      - name: Debug
+        run: ls -la ./
       - name: Debug
         run: curl  http://localhost:8080/api/currencies/USD
 

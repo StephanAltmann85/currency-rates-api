@@ -14,15 +14,8 @@ jobs:
         run: |
           docker compose wait setup-php
           docker compose wait setup-db
+          docker compose wait php-cron
           sudo chmod -R 777 ./var
-
-      - name: Debug
-        run: curl -I http://localhost:8080/api/currencies/USD
-
-      - name: Debug
-        run: ls -la var/cache
-      - name: Debug
-        run: ls -la var/log
 
       - uses: mydea/action-wait-for-api@v1
         with:
@@ -30,25 +23,17 @@ jobs:
           expected-response-field: "iso3"
           expected-response-field-value: "USD"
 
-      - name: Check api resource (Currencies)
-        uses: TobiasOlofsson88/github-action-validate-json-request-result@v1.0.5
-        with:
-          request-method: "GET"
-          request-url: "http://localhost:8080/api/currencies"
-          validate-expression: "response.length > 10 && response[0].attribute == 'value'"
-
-      - name: Check api resource (Currency)
-        uses: TobiasOlofsson88/github-action-validate-json-request-result@v1.0.5
-        with:
-          request-method: "GET"
-          request-url: "http://localhost:8080/api/currencies/USD"
-          validate-expression: "response.iso3 == 'USD'"
-
       - name: Check api docs
         run: curl -I http://localhost:8080/api/docs
 
-      - name: Check api resource (history)
+      - name: Check api resources
         run: |
-          curl -I http://localhost:8080/api/currencies
+          curl -I http://localhost:8080/api/currencies 
           curl -I http://localhost:8080/api/currencies/USD
           curl -I http://localhost:8080/api/currencies/USD/history
+
+      - name: Validate JSON
+        run: |
+          curl http://localhost:8080/api/currencies | jq
+          curl http://localhost:8080/api/currencies/USD | jq
+          curl http://localhost:8080/api/currencies/USD/history | jq

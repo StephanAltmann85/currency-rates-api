@@ -43,6 +43,8 @@ cd currency-rates-api
 docker compose -f docker-compose.prod.yaml up --build -d
 #[OR]
 docker-compose -f docker-compose.prod.yaml up --build -d
+
+sudo chmod -R 777 ./var
 ```
 
 Access via `http://{SERVER_IP}:8080/api/docs`

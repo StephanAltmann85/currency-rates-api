@@ -8,19 +8,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create Docker Universe
-        run: docker compose -f docker-compose.prod.yaml up --build
+        run: docker compose -f docker-compose.prod.yaml up --build -d
 
       - name: Debug
-        run: docker compose wait setup-php
-      - name: Debug
-        if: always()
-        run: docker compose logs setup-php
-      - name: Debug
-        run: docker compose wait setup-db
-      - name: Debug
-        run: ls -la vendor
-      - name: Debug
-        run: ls -la ./
+        run: |
+          docker compose wait setup-php
+          docker compose wait setup-db
+
       - name: Debug
         run: curl  http://localhost:8080/api/currencies/USD
 

@@ -16,6 +16,8 @@ jobs:
         run: sleep 100
       - name: Debug
         run: ls -la vendor
+      - name: Debug
+        run: curl  http://localhost:8080/api/currencies/USD
 
       - uses: mydea/action-wait-for-api@v1
         with:

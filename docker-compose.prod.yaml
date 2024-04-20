@@ -6,7 +6,8 @@ services:
     command: >
       sh -c "composer install --no-dev --no-progress --no-interaction --prefer-dist &&
              composer dump-autoload --no-dev --classmap-authoritative &&
-             composer dump-env prod"
+             composer dump-env prod &&
+             rm -rf var/cache/prod"
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
     volumes:

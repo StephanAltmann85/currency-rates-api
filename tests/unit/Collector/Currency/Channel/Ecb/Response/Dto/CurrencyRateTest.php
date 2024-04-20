@@ -6,20 +6,13 @@ namespace App\Tests\unit\Collector\Currency\Channel\Ecb\Response\Dto;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Tests\unit\TestCases\SetterGetterTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate
- **/
+#[CoversClass(CurrencyRate::class)]
 class CurrencyRateTest extends SetterGetterTestCase
 {
-    /**
-     * @dataProvider setterGetterProvider
-     *
-     * @covers ::getRate
-     * @covers ::getIso3
-     * @covers ::setRate
-     * @covers ::setIso3
-     */
+    #[DataProvider('setterGetterProvider')]
     public function testSetterGetter(string $setter, string $getter, mixed $value, bool $expectTypeError = false): void
     {
         $this->performSetterGetterCalls($setter, $getter, $value, $expectTypeError);

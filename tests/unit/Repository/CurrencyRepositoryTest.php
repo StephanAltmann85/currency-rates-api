@@ -10,11 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 
-/**
- * @coversDefaultClass \App\Repository\CurrencyRepository
- **/
+#[CoversClass(CurrencyRepository::class)]
+#[UsesClass(Currency::class)]
 class CurrencyRepositoryTest extends MockeryTestCase
 {
     private CurrencyRepository $repository;
@@ -35,17 +36,11 @@ class CurrencyRepositoryTest extends MockeryTestCase
         parent::setUp();
     }
 
-    /**
-     * @covers ::__construct
-     */
     public function testInstantiation(): void
     {
         $this->assertInstanceOf(CurrencyRepository::class, $this->repository);
     }
 
-    /**
-     * @covers ::findOrCreate
-     */
     public function testFindOrCreate(): void
     {
         $classMetadata = new ClassMetadata(Currency::class);

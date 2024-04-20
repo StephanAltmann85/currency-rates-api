@@ -6,6 +6,7 @@ namespace App\Tests\integration\Persister;
 
 use App\Entity\Currency;
 use App\Entity\CurrencyRateHistory;
+use App\EventListener\CurrencyUpdateEventListener;
 use App\Persister\CollectionPersister;
 use App\Persister\CurrencyCollectionPersister;
 use App\Tests\integration\Helper\Trait\DatabaseTrait;
@@ -13,8 +14,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+#[CoversClass(CurrencyCollectionPersister::class)]
+#[CoversClass(CurrencyUpdateEventListener::class)]
+#[UsesClass(Currency::class)]
+#[UsesClass(CurrencyRateHistory::class)]
 class CurrencyCollectionPersisterTest extends KernelTestCase
 {
     use DatabaseTrait;

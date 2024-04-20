@@ -10,16 +10,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @coversDefaultClass \App\Persister\CurrencyCollectionPersister
- **/
+#[CoversClass(CurrencyCollectionPersister::class)]
 class CurrencyCollectionPersisterTest extends MockeryTestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::persist
-     */
     public function testPersist(): void
     {
         $entityManager = \Mockery::mock(EntityManagerInterface::class);

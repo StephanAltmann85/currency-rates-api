@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\Collector\Currency;
 
+use App\Collector\Currency\Channel\Ecb\RateCollector;
+use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\Collector;
 use App\Entity\Currency;
+use App\EventListener\CurrencyUpdateEventListener;
+use App\Repository\CurrencyRepository;
 use App\Tests\integration\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +18,8 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -21,6 +28,13 @@ use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[CoversClass(Collector::class)]
+#[CoversClass(RateCollector::class)]
+#[CoversClass(CurrencyRate::class)]
+#[CoversClass(GetRatesResponse::class)]
+#[UsesClass(CurrencyRepository::class)]
+#[UsesClass(CurrencyUpdateEventListener::class)]
+#[UsesClass(Currency::class)]
 class CollectorTest extends KernelTestCase
 {
     use DatabaseTrait;

@@ -7,30 +7,18 @@ namespace App\Tests\unit\Entity;
 use App\Entity\Currency;
 use App\Entity\CurrencyRateHistory;
 use App\Tests\unit\TestCases\SetterGetterTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \App\Entity\CurrencyRateHistory
- **/
+#[CoversClass(CurrencyRateHistory::class)]
 class CurrencyRateHistoryTest extends SetterGetterTestCase
 {
-    /**
-     * @dataProvider setterGetterProvider
-     *
-     * @covers ::getRate
-     * @covers ::setRate
-     * @covers ::getCurrency
-     * @covers ::setCurrency
-     * @covers ::getDate
-     * @covers ::setDate
-     */
+    #[DataProvider('setterGetterProvider')]
     public function testSetterGetter(string $setter, string $getter, mixed $value, bool $expectTypeError = false): void
     {
         $this->performSetterGetterCalls($setter, $getter, $value, $expectTypeError);
     }
 
-    /**
-     * @covers ::getId
-     */
     public function testGetId(): void
     {
         $currencyRateHistory = new CurrencyRateHistory();

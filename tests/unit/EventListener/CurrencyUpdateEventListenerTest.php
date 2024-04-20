@@ -12,10 +12,11 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\UnitOfWork;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @coversDefaultClass \App\EventListener\CurrencyUpdateEventListener
- **/
+#[CoversClass(CurrencyUpdateEventListener::class)]
+#[UsesClass(CurrencyRateHistory::class)]
 class CurrencyUpdateEventListenerTest extends MockeryTestCase
 {
     private CurrencyUpdateEventListener $listener;
@@ -27,9 +28,6 @@ class CurrencyUpdateEventListenerTest extends MockeryTestCase
         parent::setUp();
     }
 
-    /**
-     * @covers ::onUpdate
-     */
     public function testOnUpdate(): void
     {
         $currency = \Mockery::mock(Currency::class);
@@ -42,9 +40,6 @@ class CurrencyUpdateEventListenerTest extends MockeryTestCase
         $this->listener->onUpdate($currency);
     }
 
-    /**
-     * @covers ::onFlush
-     */
     public function testOnFlush(): void
     {
         $event = \Mockery::mock(OnFlushEventArgs::class);

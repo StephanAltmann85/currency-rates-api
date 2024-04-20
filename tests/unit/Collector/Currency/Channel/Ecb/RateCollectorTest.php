@@ -16,6 +16,7 @@ use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -24,9 +25,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-/**
- * @coversDefaultClass \App\Collector\Currency\Channel\Ecb\RateCollector
- **/
+#[CoversClass(RateCollector::class)]
 class RateCollectorTest extends MockeryTestCase
 {
     private RateCollectorInterface $rateCollector;
@@ -55,26 +54,17 @@ class RateCollectorTest extends MockeryTestCase
         parent::setUp();
     }
 
-    /**
-     * @covers ::getChannel
-     */
     public function testGetChannel(): void
     {
         $this->assertEquals('ECB', $this->rateCollector->getChannel());
     }
 
-    /**
-     * @covers ::getPriority
-     */
     public function testGetPriority(): void
     {
         $this->assertEquals(0, RateCollector::getPriority());
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::collect
-     *
      * @throws CollectDataException
      */
     public function testCollect(): void
@@ -167,8 +157,6 @@ class RateCollectorTest extends MockeryTestCase
     }
 
     /**
-     * @covers ::collect
-     *
      * @throws CollectDataException
      */
     public function testCollectWithExceptionCausedByClient(): void
@@ -194,8 +182,6 @@ class RateCollectorTest extends MockeryTestCase
     }
 
     /**
-     * @covers ::collect
-     *
      * @throws CollectDataException
      */
     public function testCollectWithConstraintViolations(): void

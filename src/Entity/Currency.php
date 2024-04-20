@@ -38,6 +38,7 @@ class Currency
 
     /** @phpstan-var Collection<int,CurrencyRateHistory> */
     #[ORM\OneToMany(mappedBy: 'currency', targetEntity: CurrencyRateHistory::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
+    #[ORM\OrderBy(['date' => 'DESC'])]
     private Collection $history;
 
     #[Groups(['currency:get'])]

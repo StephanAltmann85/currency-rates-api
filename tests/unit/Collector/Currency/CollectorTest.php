@@ -11,11 +11,10 @@ use App\Entity\Currency;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\Log\LoggerInterface;
 
-/**
- * @coversDefaultClass \App\Collector\Currency\Collector
- **/
+#[CoversClass(Collector::class)]
 class CollectorTest extends MockeryTestCase
 {
     /** @phpstan-var LoggerInterface|MockInterface  */
@@ -28,10 +27,6 @@ class CollectorTest extends MockeryTestCase
         parent::setUp();
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::collect
-     */
     public function testCollect(): void
     {
         $rateCollector1 = \Mockery::mock(RateCollectorInterface::class);
@@ -89,10 +84,6 @@ class CollectorTest extends MockeryTestCase
         $this->assertEquals($currency3, $result->get(2));
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::collect
-     */
     public function testCollectWithExclusiveChannel(): void
     {
         $rateCollector1 = \Mockery::mock(RateCollectorInterface::class);

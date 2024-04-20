@@ -8,29 +8,18 @@ use App\Entity\Currency;
 use App\Entity\CurrencyRateHistory;
 use App\Tests\unit\TestCases\SetterGetterTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \App\Entity\Currency
- **/
+#[CoversClass(Currency::class)]
 class CurrencyTest extends SetterGetterTestCase
 {
-    /**
-     * @dataProvider setterGetterProvider
-     *
-     * @covers ::getRate
-     * @covers ::setRate
-     * @covers ::getUpdatedAt
-     * @covers ::setUpdatedAt
-     */
+    #[DataProvider('setterGetterProvider')]
     public function testSetterGetter(string $setter, string $getter, mixed $value, bool $expectTypeError = false): void
     {
         $this->performSetterGetterCalls($setter, $getter, $value, $expectTypeError);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::getIso3
-     */
     public function testInstantiation(): void
     {
         $currency = new Currency('USD');
@@ -39,10 +28,6 @@ class CurrencyTest extends SetterGetterTestCase
         $this->assertInstanceOf(ArrayCollection::class, $currency->getHistory());
     }
 
-    /**
-     * @covers ::addHistory
-     * @covers ::getHistory
-     */
     public function testAssociations(): void
     {
         $currencyRateHistory1 = \Mockery::mock(CurrencyRateHistory::class);

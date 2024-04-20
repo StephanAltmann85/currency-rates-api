@@ -8,17 +8,12 @@ use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Tests\unit\TestCases\SetterGetterTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse
- **/
+#[CoversClass(GetRatesResponse::class)]
 class GetRatesResponseTest extends SetterGetterTestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::getCurrencyRates
-     * @covers ::getTime
-     */
     public function testInstantiation(): void
     {
         $response = new GetRatesResponse();
@@ -27,22 +22,12 @@ class GetRatesResponseTest extends SetterGetterTestCase
         $this->assertInstanceOf(ArrayCollection::class, $response->getCurrencyRates());
     }
 
-    /**
-     * @dataProvider setterGetterProvider
-     *
-     * @covers ::getTime
-     * @covers ::setTime
-     */
+    #[DataProvider('setterGetterProvider')]
     public function testSetterGetter(string $setter, string $getter, mixed $value, bool $expectTypeError = false): void
     {
         $this->performSetterGetterCalls($setter, $getter, $value, $expectTypeError);
     }
 
-    /**
-     * @covers ::addCurrencyRate
-     * @covers ::getCurrencyRates
-     * @covers ::setCurrencyRates
-     */
     public function testAssociations(): void
     {
         $currencyRate1 = \Mockery::mock(CurrencyRate::class);

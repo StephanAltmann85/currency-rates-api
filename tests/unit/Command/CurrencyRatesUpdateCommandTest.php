@@ -9,14 +9,13 @@ use App\Command\CurrencyRatesUpdateCommand;
 use App\Persister\CollectionPersister;
 use Doctrine\Common\Collections\Collection;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @coversDefaultClass \App\Command\CurrencyRatesUpdateCommand
- **/
+#[CoversClass(CurrencyRatesUpdateCommand::class)]
 class CurrencyRatesUpdateCommandTest extends TestCase
 {
     /** @phpstan-var Collector|MockInterface  */
@@ -46,10 +45,6 @@ class CurrencyRatesUpdateCommandTest extends TestCase
         $this->tester = new CommandTester($this->command);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::execute
-     */
     public function testRun(): void
     {
         $currencies = \Mockery::mock(Collection::class);
@@ -77,11 +72,6 @@ class CurrencyRatesUpdateCommandTest extends TestCase
         $this->assertEquals(Command::SUCCESS, $result);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::run
-     * @covers ::configure
-     */
     public function testRunWithChannelOption(): void
     {
         $currencies = \Mockery::mock(Collection::class);

@@ -8,16 +8,31 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create Docker Universe
-        run: docker compose -f docker-compose.prod.yaml up --build -d --wait --wait-timeout 60
+        run: docker compose -f docker-compose.prod.yaml up --build -d --wait --wait-timeout 120
 
-      - name: Check installation
-        run: ls -la vendor
+      - uses: mydea/action-wait-for-api@v1
+        with:
+          url: "http://localhost:8080/api/currencies/USD"
+          expected-response-field: "iso3"
+          expected-response-field-value: "USD"
+
+      - name: Check api resource (Currencies)
+        uses: TobiasOlofsson88/github-action-validate-json-request-result@v1.0.5
+        with:
+          request-method: "GET"
+          request-url: "ttp://localhost:8080/api/currencies"
+          validate-expression: "response.length > 10 && response[0].attribute == 'value'"
+
+      - name: Check api resource (Currency)
+        uses: TobiasOlofsson88/github-action-validate-json-request-result@v1.0.5
+        with:
+          request-method: "GET"
+          request-url: "ttp://localhost:8080/api/currencies/USD"
+          validate-expression: "response.iso3 == 'USD'"
 
       - name: Check api docs
         run: curl -I http://localhost:8080/api/docs
 
-      - name: Check api resources
+      - name: Check api resource (history)
         run: |
-          curl -s http://localhost:8080/api/currencies
-          curl -s http://localhost:8080/api/currencies/USD
           curl -s http://localhost:8080/api/currencies/USD/history

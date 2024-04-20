@@ -10,6 +10,7 @@ services:
              rm -rf var/cache/prod"
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
+      - APP_ENV=prod
     volumes:
       - ./:/var/www
 

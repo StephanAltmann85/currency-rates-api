@@ -14,7 +14,7 @@ jobs:
         run: |
           docker compose wait setup-php
           docker compose wait setup-db
-          chmod -R 777 ./var
+          sudo chmod -R 777 ./var
 
       - name: Debug
         run: curl -I http://localhost:8080/api/currencies/USD

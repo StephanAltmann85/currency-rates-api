@@ -10,7 +10,11 @@ jobs:
       - name: Create Docker Universe
         run: docker compose -f docker-compose.prod.yaml up --build -d --wait --wait-timeout 120
 
-      - name: Check api docs
+      - name: Debug
+        run: ls -la vendor
+      - name: Debug
+        run: sleep 100
+      - name: Debug
         run: ls -la vendor
 
       - uses: mydea/action-wait-for-api@v1

@@ -19,7 +19,7 @@ class Collector
     public function __construct(
         #[TaggedIterator('currency.rate_collector', defaultPriorityMethod: 'getPriority')]
         private readonly iterable $collectors,
-        private readonly LoggerInterface $currencyRatesUpdateLogger
+        private readonly LoggerInterface $currencyRatesUpdateLogger,
     ) {
     }
 

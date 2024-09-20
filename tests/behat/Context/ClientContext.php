@@ -14,7 +14,7 @@ class ClientContext implements Context
 {
     public function __construct(
         /** @var MockHttpClient */
-        private readonly HttpClientInterface $httpClient
+        private readonly HttpClientInterface $httpClient,
     ) {
     }
 

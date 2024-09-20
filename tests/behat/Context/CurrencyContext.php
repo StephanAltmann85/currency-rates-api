@@ -15,7 +15,7 @@ class CurrencyContext implements Context
 {
     public function __construct(
         private readonly CurrencyRepository $currencyRepository,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 

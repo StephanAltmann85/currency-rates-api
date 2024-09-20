@@ -22,7 +22,7 @@ class CommandContext implements Context
     private ?string $outputString = null;
 
     public function __construct(
-        private readonly KernelInterface $kernel
+        private readonly KernelInterface $kernel,
     ) {
         $this->application = new Application($this->kernel);
         $this->output = new BufferedOutput();

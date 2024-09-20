@@ -20,7 +20,7 @@ class CurrencyRatesUpdateCommand extends Command
 {
     public function __construct(
         private readonly Collector $collector,
-        private readonly CollectionPersister $collectionPersister
+        private readonly CollectionPersister $collectionPersister,
     ) {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class CurrencyRatesUpdateCommand extends Command
 
         $currencies = $this->collector->collect(\is_string($channel) ? $channel : null);
 
-        $output->writeln(sprintf('Got %d.', $currencies->count()), OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln(\sprintf('Got %d.', $currencies->count()), OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln('Persisting data...', OutputInterface::VERBOSITY_VERBOSE);
 
         $this->collectionPersister->persist($currencies);

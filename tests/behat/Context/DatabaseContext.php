@@ -25,7 +25,7 @@ class DatabaseContext implements Context
         private readonly EntityManagerInterface $entityManager,
         private readonly SchemaTool $schemaTool,
         #[Autowire(service: 'fidry_alice_data_fixtures.doctrine.purger_loader')]
-        private readonly LoaderInterface $loader
+        private readonly LoaderInterface $loader,
     ) {
         $this->classes = $this->entityManager->getMetadataFactory()->getAllMetadata();
     }

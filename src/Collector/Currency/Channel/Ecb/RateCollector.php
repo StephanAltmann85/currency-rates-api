@@ -24,7 +24,7 @@ class RateCollector implements RateCollectorInterface
         private readonly HttpClientInterface $client,
         private readonly SerializerInterface $serializer,
         private readonly ValidatorInterface $validator,
-        private readonly CurrencyRepository $currencyRepository
+        private readonly CurrencyRepository $currencyRepository,
     ) {
     }
 

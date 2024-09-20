@@ -13,7 +13,7 @@ jobs:
           coverage: xdebug
 
       - name: Create Docker Universe
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Get composer cache directory
         id: composer-cache

@@ -1,10 +1,10 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
+    ->notPath(['src/Migrations/migration.tpl', 'Kernel.php'])
     ->in('src')
-    ->in('tests')
-    ->notPath('src/Migrations/migration.tpl')
-;
+    ->in('tests');
+
 
 $config = new PhpCsFixer\Config();
 
@@ -24,6 +24,6 @@ return $config
             'include' => ['@compiler_optimized'],
             'scope' => 'namespaced',
         ],
+        'declare_strict_types' => true
     ])
-    ->setFinder($finder)
-    ;
+    ->setFinder($finder);

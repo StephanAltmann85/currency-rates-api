@@ -8,9 +8,9 @@ use App\Entity\Currency;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
-class CurrencyCollectionPersister implements CollectionPersister
+readonly class CurrencyCollectionPersister implements CollectionPersister
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 

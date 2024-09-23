@@ -9,7 +9,7 @@ use App\Entity\Currency;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class Collector
 {
@@ -17,7 +17,7 @@ class Collector
      * @param RateCollectorInterface[] $collectors
      */
     public function __construct(
-        #[TaggedIterator('currency.rate_collector', defaultPriorityMethod: 'getPriority')]
+        #[AutowireIterator('currency.rate_collector', defaultPriorityMethod: 'getPriority')]
         private readonly iterable $collectors,
         private readonly LoggerInterface $currencyRatesUpdateLogger,
     ) {

@@ -98,13 +98,13 @@
             "php vendor/bin/php-cs-fixer fix"
         ],
         "test-units": [
-            "php vendor/bin/phpunit --testsuite unit --coverage-html coverage_unit"
+            "XDEBUG_MODE=coverage php vendor/bin/phpunit --testsuite unit --coverage-html coverage_unit"
         ],
         "test-integration": [
-            "php vendor/bin/phpunit --testsuite integration"
+            "XDEBUG_MODE=coverage php vendor/bin/phpunit --testsuite integration"
         ],
         "test-behat": [
-            "php vendor/bin/behat"
+            "XDEBUG_MODE=coverage php vendor/bin/behat"
         ]
     },
     "conflict": {

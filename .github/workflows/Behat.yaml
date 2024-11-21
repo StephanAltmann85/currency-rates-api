@@ -20,7 +20,7 @@ jobs:
           key: docker-${{ runner.os }}-${{ hashFiles('docker-compose.yaml') }}
 
       - name: Create Docker Universe
-        run: docker compose up -d --wait-timeout 10
+        run: docker compose up -d
 
       - name: Get composer cache directory
         id: composer-cache
@@ -37,7 +37,9 @@ jobs:
         run: composer install --prefer-dist
 
       - name: Create Database
-        run: bin/console doctrine:database:create
+        run: |
+          sleep 10
+          bin/console doctrine:database:create
 
       - name: Run migrations
         run: bin/console doctrine:migrations:migrate

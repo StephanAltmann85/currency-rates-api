@@ -46,7 +46,9 @@ jobs:
         run: composer install --prefer-dist
 
       - name: Create Database
-        run: bin/console doctrine:database:create
+        run: |
+          sleep 10
+          bin/console doctrine:database:create
 
       - name: Run migrations
         run: bin/console doctrine:migrations:migrate

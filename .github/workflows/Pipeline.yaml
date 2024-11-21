@@ -11,6 +11,12 @@ env:
   PHP_VERSION: '8.4'
 
 jobs:
+  Init:
+    steps:
+      - name: Set env BRANCH
+        run: echo "PHP_VERSION="8.4" >> $GITHUB_ENV
+    runs-on: ubuntu-latest
+
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
 

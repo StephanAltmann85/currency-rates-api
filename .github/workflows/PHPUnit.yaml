@@ -5,7 +5,7 @@ name: Test
 
 jobs:
   unit:
-    name: Units
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

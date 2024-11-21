@@ -4,7 +4,7 @@ on:
 name: Analyse
 jobs:
   phpstan:
-    name: PHPStan
+    name: Analyse
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

@@ -18,6 +18,11 @@ jobs:
           tools: pecl
           coverage: xdebug
 
+      - name: Cache Docker images
+        uses: ScribeMD/docker-cache@0.3.6
+        with:
+          key: docker-${{ runner.os }}-${{ hashFiles('docker-compose.yaml') }}
+
       - name: Create Docker Universe
         run: docker compose up -d
 
@@ -33,11 +38,11 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
 
       - name: Install dependencies
-        if: ${{ matrix.php-version != '8.3' }}
+        if: ${{ matrix.php-version != '8.4' }}
         run: composer install --prefer-dist --ignore-platform-req=php
 
       - name: Install dependencies
-        if: ${{ matrix.php-version == '8.3' }}
+        if: ${{ matrix.php-version == '8.4' }}
         run: composer install --prefer-dist
 
       - name: Create Database

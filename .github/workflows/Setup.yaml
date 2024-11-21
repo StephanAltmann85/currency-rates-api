@@ -7,6 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache Docker images
+        uses: ScribeMD/docker-cache@0.3.6
+        with:
+          key: docker-${{ runner.os }}-${{ hashFiles('docker-compose.prod.yaml') }}
+
       - name: Create Docker Universe
         run: docker compose -f docker-compose.prod.yaml up --build -d
 

@@ -10,8 +10,6 @@ name: Pipeline
 jobs:
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
-    with:
-      PHP_VERSION: '8.4'
 
   Lint-Yaml:
     needs:

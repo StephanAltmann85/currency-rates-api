@@ -23,7 +23,7 @@ jobs:
           docker compose wait setup-db
           sudo chmod -R 777 ./var
 
-      - uses: mydea/action-wait-for-api@v1
+      - uses: mydea/action-wait-for-api@v2
         with:
           url: "http://localhost:8080/api/currencies/USD"
           expected-response-field: "iso3"

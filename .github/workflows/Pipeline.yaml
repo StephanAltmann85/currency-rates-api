@@ -7,29 +7,20 @@ on:
 
 name: Pipeline
 
-env:
-  PHP_VERSION: '8.4'
-  RELEVANT_PHP_VERSIONS: '["8.3", "8.4"]'
-
-#TODO: replace by env
 jobs:
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
     with:
-      PHP_VERSION: $PHP_VERSION
+      PHP_VERSION: '8.4'
 
   Lint-Yaml:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/lint-yaml.yaml
-    with:
-      PHP_VERSION: '8.4'
   Doctrine-Schema:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/doctrine-schema-validate.yaml
-    with:
-      PHP_VERSION: '8.4'
   PHPCS:
     needs:
       - Composer-Audit
@@ -38,8 +29,6 @@ jobs:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/PHPStan.yaml
-    with:
-      PHP_VERSIONS: '[\"8.3\", \"8.4\"]'
 
   UnitTests:
     needs:
@@ -60,8 +49,6 @@ jobs:
       - UnitTests
       - IntegrationTests
     uses: ./.github/workflows/Behat.yaml
-    with:
-      PHP_VERSIONS: '["8.3", "8.4"]'
 
   Setup:
     needs:

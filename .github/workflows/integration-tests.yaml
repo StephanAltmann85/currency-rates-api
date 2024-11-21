@@ -37,7 +37,6 @@ jobs:
         with:
           path: $COMPOSER_DIRECTORY
           key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
 
       - name: Install dependencies
         if: ${{ matrix.php-version != '8.4' }}

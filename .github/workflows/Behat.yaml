@@ -1,9 +1,5 @@
 on:
   workflow_call:
-    inputs:
-      PHP_VERSIONS:
-        required: true
-        type: string
 
 name: Test
 jobs:

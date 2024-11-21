@@ -1,9 +1,5 @@
 on:
   workflow_call:
-    inputs:
-      PHP_VERSION:
-        required: true
-        type: string
 
 name: Analyse
 jobs:
@@ -16,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ inputs.PHP_VERSION }}
+          php-version: '8.4'
           tools: pecl
 
       - name: Cache Docker images
@@ -35,7 +31,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: $COMPOSER_DIRECTORY
-          key: ${{ runner.os }}-${{ inputs.PHP_VERSION }}-composer-${{ hashFiles('composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
 
       - name: Install dependencies
         run: composer install --prefer-dist

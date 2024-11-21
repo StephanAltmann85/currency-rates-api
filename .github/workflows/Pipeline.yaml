@@ -1,0 +1,56 @@
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+name: Pipeline
+
+#add composer install job with artifacts
+
+jobs:
+  Audit:
+    uses: ./.github/workflows/composer-audit.yaml
+
+  Lint-Yaml:
+    needs:
+      - Audit
+    uses: ./.github/workflows/lint-yaml.yaml
+  SchemaValidate:
+    needs:
+      - Audit
+    uses: ./.github/workflows/schema-validate.yaml
+  PHPCS:
+    needs:
+      - Audit
+    uses: ./.github/workflows/php-cs-fixer.yaml
+  PHPStan:
+    needs:
+      - Audit
+    uses: ./.github/workflows/PHPStan.yaml
+
+  UnitTests:
+    needs:
+      - Audit
+      - Lint-Yaml
+      - SchemaValidate
+      - PHPCS
+      - PHPStan
+    uses: ./.github/workflows/PHPUnit.yaml
+  IntegrationTests:
+    needs:
+      - Audit
+      - Lint-Yaml
+      - SchemaValidate
+      - PHPCS
+      - PHPStan
+    uses: ./.github/workflows/IntegrationTests.yaml
+  Behat:
+    needs:
+      - UnitTests
+      - IntegrationTests
+    uses: ./.github/workflows/Behat.yaml
+
+  Setup:
+    needs:
+      - Behat
+    uses: ./.github/workflows/Setup.yaml

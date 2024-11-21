@@ -1,4 +1,6 @@
-on: [push]
+on:
+  workflow_call:
+
 name: Analyse
 jobs:
     composer-audit:

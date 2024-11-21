@@ -1,6 +1,7 @@
-name: Test
+on:
+  workflow_call:
 
-on: [push]
+name: Test
 
 jobs:
   unit:

@@ -1,21 +1,19 @@
-on: [push]
-name: Analyse
+on:
+  workflow_call:
+
+name: Lint
 jobs:
-  doctrine:
-    name: Schema-Validate
+  yaml:
+    name: Yaml
     runs-on: ubuntu-latest
-    env:
-      APP_ENV: test
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: pecl
+          extensions: mbstring
           coverage: xdebug
-
-      - name: Create Docker Universe
-        run: docker compose up -d
 
       - name: Get composer cache directory
         id: composer-cache
@@ -31,13 +29,6 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
-      - name: Create Database
+      - name: Lint Yaml files
         run: |
-          sleep 10
-          bin/console doctrine:database:create
-
-      - name: Run migrations
-        run: bin/console doctrine:migrations:migrate
-
-      - name: Validate
-        run: bin/console doctrine:schema:validate -n -vv
+          bin/console lint:yaml --parse-tags config/ src/ 

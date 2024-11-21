@@ -4,11 +4,13 @@ jobs:
   behat:
     name: Behat
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: test
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           tools: pecl
           coverage: xdebug
 
@@ -30,13 +32,10 @@ jobs:
         run: composer install --prefer-dist
 
       - name: Create Database
-        run: APP_ENV=test bin/console doctrine:database:create
+        run: bin/console doctrine:database:create
 
       - name: Run migrations
-        run: APP_ENV=test bin/console doctrine:migrations:migrate
+        run: bin/console doctrine:migrations:migrate
 
       - name: run Tests
-        run: APP_ENV=test vendor/bin/behat
-
-        env:
-          DATABASE_URL: mysql://root:root@127.0.0.1:3306/app_test?serverVersion=8.0&charset=utf8mb4
+        run: vendor/bin/behat

@@ -13,6 +13,7 @@ jobs:
               run: | 
                 echo $PHP_VERSION
                 echo env.PHP_VERSION
+                echo ${{env.PHP_VERSION}}
 
             - uses: shivammathur/setup-php@v2
               with:

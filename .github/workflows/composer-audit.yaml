@@ -8,9 +8,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+
+            - name: Test
+              run: | 
+                echo $PHP_VERSION
+                echo env.PHP_VERSION
+
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: env.PHP_VERSION
+                  php-version: $PHP_VERSION
                   tools: pecl, composer:2
                   extensions: mbstring
                   coverage: xdebug

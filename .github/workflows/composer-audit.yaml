@@ -8,12 +8,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - name: Read the current used PHP Version
-              id: get-php-version
-              run: echo "::set-output name=version $(head -n1 .php-version)"
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ steps.get-php-version.outputs.version }}
+                  php-version: $PHP_VERSION
                   tools: pecl, composer:2
                   extensions: mbstring
                   coverage: xdebug
@@ -26,8 +23,7 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: $COMPOSER_DIRECTORY
-                key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('*/composer.lock') }}
-                restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
+                key: ${{ runner.os }}-composer-${{ hashFiles('*/composer.lock') }}
 
             - name: Install dependencies
               run: composer install --prefer-dist --no-scripts --no-dev

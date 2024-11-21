@@ -13,8 +13,6 @@ env:
 jobs:
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
-    with:
-      PHP_VERSION: $PHP_VERSION
 
   Lint-Yaml:
     needs:

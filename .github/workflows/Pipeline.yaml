@@ -41,7 +41,6 @@ jobs:
     with:
       PHP_VERSIONS: '["8.3", "8.4"]'
 
-
   UnitTests:
     needs:
       - Lint-Yaml
@@ -62,7 +61,7 @@ jobs:
       - IntegrationTests
     uses: ./.github/workflows/Behat.yaml
     with:
-      PHP_VERSIONS: "8.3", "8.4"
+      PHP_VERSIONS: '["8.3", "8.4"]'
 
   Setup:
     needs:

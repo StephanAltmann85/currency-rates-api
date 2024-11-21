@@ -15,10 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env BRANCH
-        run: echo "PHP_VERSION=8.4" >> $GITHUB_ENV
+        run: echo "PHP_VERSION_=8.4" >> $GITHUB_ENV
 
       - name: Set env BRANCH2
-        run: echo $PHP_VERSION
+        run: |
+          echo $PHP_VERSION
+          echo $PHP_VERSION_
+          echo $env.PHP_VERSION
 
 
   Composer-Audit:

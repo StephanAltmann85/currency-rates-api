@@ -28,7 +28,7 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: $COMPOSER_DIRECTORY
-                key: ${{ runner.os }}-${{ inputs.PHP_VERSION }}-composer-${{ hashFiles('*/composer.lock') }}
+                key: ${{ runner.os }}-${{ inputs.PHP_VERSION }}-composer-${{ hashFiles('composer.lock') }}
 
             - name: Install dependencies
               run: composer install --prefer-dist --no-scripts --no-dev

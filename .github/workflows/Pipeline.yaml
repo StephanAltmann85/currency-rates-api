@@ -9,7 +9,9 @@ name: Pipeline
 
 env:
   PHP_VERSION: '8.4'
+  RELEVANT_PHP_VERSIONS: ('8.3', '8.4')
 
+#TODO: replace by env
 jobs:
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
@@ -20,10 +22,14 @@ jobs:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/lint-yaml.yaml
+    with:
+      PHP_VERSION: '8.4'
   Doctrine-Schema:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/doctrine-schema-validate.yaml
+    with:
+      PHP_VERSION: '8.4'
   PHPCS:
     needs:
       - Composer-Audit

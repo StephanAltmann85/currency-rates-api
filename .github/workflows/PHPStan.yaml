@@ -1,9 +1,9 @@
 on:
   workflow_call:
     inputs:
-      PHP_VERSION:
-        required: true
-        type: string
+      PHP_VERSIONS:
+        description: "List of PHP versions"
+        type: ~
 
 name: Analyse
 jobs:
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [ '8.3', ${{ inputs.PHP_VERSION }} ]
+        php-version: ${{ fromJSON(github.event.inputs.PHP_VERSIONS)}}
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2

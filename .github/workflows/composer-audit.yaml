@@ -1,5 +1,9 @@
 on:
   workflow_call:
+    inputs:
+      PHP_VERSION:
+        required: true
+        type: string
 
 name: Analyse
 jobs:

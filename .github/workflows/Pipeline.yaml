@@ -29,7 +29,7 @@ jobs:
       - Init
     uses: ./.github/workflows/composer-audit.yaml
     with:
-      PHP_VERSION: $PHP_VERSION
+      PHP_VERSION: ${{env.PHP_VERSION}}
 
   Lint-Yaml:
     needs:

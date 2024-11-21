@@ -1,13 +1,17 @@
-on: [push]
+on:
+  workflow_call:
+
 name: Test
 jobs:
   integration:
-    name: Integration
+    name: Test
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: test
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2', '8.3']
+        php-version: ['8.3', '8.4']
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -16,36 +20,41 @@ jobs:
           tools: pecl
           coverage: xdebug
 
+      - name: Cache Docker images
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key: docker-${{ runner.os }}-${{ hashFiles('docker-compose.yaml') }}
+
       - name: Create Docker Universe
         run: docker compose up -d
 
-      - name: Get composer cache directory
+      - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - name: Cache dependencies
+      - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('*/composer.lock') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        if: ${{ matrix.php-version != '8.3' }}
+        if: ${{ matrix.php-version != '8.4' }}
         run: composer install --prefer-dist --ignore-platform-req=php
 
       - name: Install dependencies
-        if: ${{ matrix.php-version == '8.3' }}
+        if: ${{ matrix.php-version == '8.4' }}
         run: composer install --prefer-dist
 
       - name: Create Database
-        run: APP_ENV=test bin/console doctrine:database:create
+        run: |
+          sleep 10
+          bin/console doctrine:database:create
 
       - name: Run migrations
-        run: APP_ENV=test bin/console doctrine:migrations:migrate
+        run: bin/console doctrine:migrations:migrate
 
       - name: run Tests
         run: vendor/bin/phpunit --testsuite integration
-
-        env:
-          DATABASE_URL: mysql://root:root@127.0.0.1:3306/app_test?serverVersion=8.3.0&charset=utf8mb4

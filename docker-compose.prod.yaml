@@ -15,7 +15,7 @@ services:
       - ./:/var/www
 
   database:
-    image: 'mysql:8.3.0'
+    image: 'mysql:9.1.0'
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -30,7 +30,7 @@ services:
       - setup-php
       - database
     environment:
-      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=9.1.0&charset=utf8mb4
     command: >
       sh -c "sleep 30 &&
              bin/console doctrine:database:create --if-not-exists &&
@@ -47,7 +47,7 @@ services:
       - setup-php
       - database
     environment:
-      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=9.1.0&charset=utf8mb4
     volumes:
       - ./:/var/www
       - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini
@@ -62,7 +62,7 @@ services:
       - database
       - setup-db
     environment:
-      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=8.3.0&charset=utf8mb4
+      - DATABASE_URL=mysql://root:root@database:3306/app?serverVersion=9.1.0&charset=utf8mb4
     volumes:
       - ./:/var/www
       - ./docker/php-config/ini/general.ini:/usr/local/etc/php/conf.d/general.ini

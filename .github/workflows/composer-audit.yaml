@@ -13,15 +13,9 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Test
-              run: | 
-                echo $PHP_VERSION
-                echo env.PHP_VERSION
-                echo ${{ inputs.PHP_VERSION }}
-
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: $PHP_VERSION
+                  php-version: ${{ inputs.PHP_VERSION }}
                   tools: pecl, composer:2
                   extensions: mbstring
                   coverage: xdebug
@@ -34,7 +28,7 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: $COMPOSER_DIRECTORY
-                key: ${{ runner.os }}-composer-${{ hashFiles('*/composer.lock') }}
+                key: ${{ runner.os }}-${{ inputs.PHP_VERSION }}-composer-${{ hashFiles('*/composer.lock') }}
 
             - name: Install dependencies
               run: composer install --prefer-dist --no-scripts --no-dev

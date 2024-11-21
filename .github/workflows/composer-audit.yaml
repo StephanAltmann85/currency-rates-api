@@ -4,7 +4,7 @@ on:
 name: Analyse
 jobs:
     composer-audit:
-        name: Composer Audit
+        name: Audit
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4

@@ -4,7 +4,7 @@ on:
 name: Analyse
 jobs:
   doctrine:
-    name: Schema-Validate
+    name: Validate
     runs-on: ubuntu-latest
     env:
       APP_ENV: test

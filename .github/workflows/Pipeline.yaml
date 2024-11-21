@@ -18,7 +18,7 @@ jobs:
   Doctrine-Schema:
     needs:
       - Composer-Audit
-    uses: ./.github/workflows/schema-validate.yaml
+    uses: ./.github/workflows/doctrine-schema-validate.yaml
   PHPCS:
     needs:
       - Composer-Audit

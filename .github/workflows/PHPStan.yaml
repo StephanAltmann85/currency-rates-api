@@ -2,8 +2,8 @@ on:
   workflow_call:
     inputs:
       PHP_VERSIONS:
-        description: "List of PHP versions"
-        type: ~
+        type: string
+        required: true
 
 name: Analyse
 jobs:

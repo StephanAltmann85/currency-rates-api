@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ${{ fromJSON(github.event.inputs.PHP_VERSIONS)}}
+        php-version: ['8.3', '8.4']
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: $COMPOSER_DIRECTORY
-          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('*/composer.lock') }}
+          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}
 
       - name: Install dependencies
         if: ${{ matrix.php-version != '8.4' }}

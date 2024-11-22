@@ -35,26 +35,30 @@ jobs:
   Lint-Yaml:
     needs:
       - Composer-Audit
+      - Init
     uses: ./.github/workflows/lint-yaml.yaml
     with:
-      CURRENT_PHP_VERSION: '8.4'
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
   Doctrine-Schema:
     needs:
       - Composer-Audit
+      - Init
     uses: ./.github/workflows/doctrine-schema-validate.yaml
     with:
-      CURRENT_PHP_VERSION: '8.4'
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
   PHPCS:
     needs:
       - Composer-Audit
+      - Init
     uses: ./.github/workflows/php-cs-fixer.yaml
   PHPStan:
     needs:
       - Composer-Audit
+      - Init
     uses: ./.github/workflows/PHPStan.yaml
     with:
-      CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.3'
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
+      PREVIOUS_PHP_VERSION: ${{ needs.Init.outputs.PREVIOUS_PHP_VERSION }}
 
   UnitTests:
     needs:
@@ -62,28 +66,31 @@ jobs:
       - Doctrine-Schema
       - PHPCS
       - PHPStan
+      - Init
     uses: ./.github/workflows/unit-tests.yaml
     with:
-      CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.3'
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
+      PREVIOUS_PHP_VERSION: ${{ needs.Init.outputs.PREVIOUS_PHP_VERSION }}
   IntegrationTests:
     needs:
       - Lint-Yaml
       - Doctrine-Schema
       - PHPCS
       - PHPStan
+      - Init
     uses: ./.github/workflows/integration-tests.yaml
     with:
-      CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.3'
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
+      PREVIOUS_PHP_VERSION: ${{ needs.Init.outputs.PREVIOUS_PHP_VERSION }}
   Behat:
     needs:
       - UnitTests
       - IntegrationTests
+      - Init
     uses: ./.github/workflows/Behat.yaml
     with:
-      CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.3'
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
+      PREVIOUS_PHP_VERSION: ${{ needs.Init.outputs.PREVIOUS_PHP_VERSION }}
 
   Setup:
     needs:

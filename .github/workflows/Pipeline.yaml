@@ -12,10 +12,11 @@ env:
   PREVIOUS_PHP_VERSION: '8.3'
 
 jobs:
+
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
     with:
-      CURRENT_PHP_VERSION: "${{ env.CURRENT_PHP_VERSION }}"
+      CURRENT_PHP_VERSION: ${{ env.CURRENT_PHP_VERSION }}
 
   Lint-Yaml:
     needs:

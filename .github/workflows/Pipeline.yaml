@@ -10,19 +10,27 @@ name: Pipeline
 jobs:
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
 
   Lint-Yaml:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/lint-yaml.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
   Doctrine-Schema:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/doctrine-schema-validate.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
   PHPCS:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/php-cs-fixer.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
   PHPStan:
     needs:
       - Composer-Audit
@@ -38,6 +46,9 @@ jobs:
       - PHPCS
       - PHPStan
     uses: ./.github/workflows/unit-tests.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.4'
   IntegrationTests:
     needs:
       - Lint-Yaml
@@ -45,11 +56,17 @@ jobs:
       - PHPCS
       - PHPStan
     uses: ./.github/workflows/integration-tests.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.4'
   Behat:
     needs:
       - UnitTests
       - IntegrationTests
     uses: ./.github/workflows/Behat.yaml
+    with:
+      CURRENT_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.4'
 
   Setup:
     needs:

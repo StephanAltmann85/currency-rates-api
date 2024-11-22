@@ -1,5 +1,12 @@
 on:
   workflow_call:
+    inputs:
+      CURRENT_PHP_VERSION:
+        type: string
+        required: true
+      PREVIOUS_PHP_VERSION:
+        type: string
+        required: true
 
 name: Test
 jobs:
@@ -11,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.3', '8.4']
+        php-version: [ "${{ inputs.PREVIOUS_PHP_VERSION }}","${{ inputs.CURRENT_PHP_VERSION }}" ]
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -41,11 +48,11 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        if: ${{ matrix.php-version != '8.4' }}
+        if: ${{ matrix.php-version != inputs.CURRENT_PHP_VERSION }}
         run: composer install --prefer-dist --ignore-platform-req=php
 
       - name: Install dependencies
-        if: ${{ matrix.php-version == '8.4' }}
+        if: ${{ matrix.php-version == inputs.CURRENT_PHP_VERSION }}
         run: composer install --prefer-dist
 
       - name: Create Database

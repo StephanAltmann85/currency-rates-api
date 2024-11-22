@@ -28,7 +28,8 @@ jobs:
       - Composer-Audit
     uses: ./.github/workflows/PHPStan.yaml
     with:
-      PHP_VERSION: '8.4'
+      CURRENT_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.4'
 
   UnitTests:
     needs:

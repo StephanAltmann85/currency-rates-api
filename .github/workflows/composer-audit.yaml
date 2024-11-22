@@ -1,5 +1,9 @@
 on:
   workflow_call:
+    inputs:
+      CURRENT_PHP_VERSION:
+        type: string
+        required: true
 
 name: Analyse
 jobs:
@@ -11,7 +15,7 @@ jobs:
 
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.4'
+                  php-version: "${{ inputs.CURRENT_PHP_VERSION }}"
                   tools: pecl, composer:2
                   extensions: mbstring
                   coverage: xdebug

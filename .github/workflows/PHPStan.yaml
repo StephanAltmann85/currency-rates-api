@@ -1,7 +1,10 @@
 on:
   workflow_call:
     inputs:
-      PHP_VERSION:
+      CURRENT_PHP_VERSION:
+        type: string
+        required: true
+      PREVIOUS_PHP_VERSION:
         type: string
         required: true
 
@@ -13,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [ '8.3',"${{ inputs.PHP_VERSION }}" ]
+        php-version: [ "${{ inputs.PREVIOUS_PHP_VERSION }}","${{ inputs.CURRENT_PHP_VERSION }}" ]
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2

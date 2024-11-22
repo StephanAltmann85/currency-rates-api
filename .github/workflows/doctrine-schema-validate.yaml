@@ -1,5 +1,9 @@
 on:
   workflow_call:
+    inputs:
+      CURRENT_PHP_VERSION:
+        type: string
+        required: true
 
 name: Analyse
 jobs:
@@ -12,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: "${{ inputs.CURRENT_PHP_VERSION }}"
           tools: pecl
 
       - name: Cache Docker images

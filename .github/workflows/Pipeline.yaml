@@ -16,14 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get URL env var
+        id: init
         run: |
           echo $CURRENT_PHP_VERSION
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+          echo "PHP_VERSION=$CURRENT_PHP_VERSION" >> $GITHUB_OUTPUT
 
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
     with:
-      CURRENT_PHP_VERSION: "${{ CURRENT_PHP_VERSION }}"
+      CURRENT_PHP_VERSION: "${{ steps.init.outputs.PHP_VERSION }}"
 
   Lint-Yaml:
     needs:

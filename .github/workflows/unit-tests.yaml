@@ -39,11 +39,11 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        if: ${{ matrix.php-version != '8.4' }}
+        if: ${{ matrix.php-version != inputs.CURRENT_PHP_VERSION }}
         run: composer install --prefer-dist --ignore-platform-req=php
 
       - name: Install dependencies
-        if: ${{ matrix.php-version == '8.4' }}
+        if: ${{ matrix.php-version == inputs.CURRENT_PHP_VERSION }}
         run: composer install --prefer-dist
 
       - name: run Tests

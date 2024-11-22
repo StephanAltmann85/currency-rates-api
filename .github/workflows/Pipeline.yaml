@@ -35,7 +35,7 @@ jobs:
     uses: ./.github/workflows/PHPStan.yaml
     with:
       CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.3'
 
   UnitTests:
     needs:
@@ -46,7 +46,7 @@ jobs:
     uses: ./.github/workflows/unit-tests.yaml
     with:
       CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.3'
   IntegrationTests:
     needs:
       - Lint-Yaml
@@ -56,7 +56,7 @@ jobs:
     uses: ./.github/workflows/integration-tests.yaml
     with:
       CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.3'
   Behat:
     needs:
       - UnitTests
@@ -64,7 +64,7 @@ jobs:
     uses: ./.github/workflows/Behat.yaml
     with:
       CURRENT_PHP_VERSION: '8.4'
-      PREVIOUS_PHP_VERSION: '8.4'
+      PREVIOUS_PHP_VERSION: '8.3'
 
   Setup:
     needs:

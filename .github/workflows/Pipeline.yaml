@@ -29,8 +29,6 @@ jobs:
     needs:
       - Composer-Audit
     uses: ./.github/workflows/php-cs-fixer.yaml
-    with:
-      CURRENT_PHP_VERSION: '8.4'
   PHPStan:
     needs:
       - Composer-Audit

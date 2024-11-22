@@ -12,6 +12,13 @@ env:
   PREVIOUS_PHP_VERSION: '8.3'
 
 jobs:
+  Init:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get URL env var
+        run: |
+          echo $CURRENT_PHP_VERSION
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml

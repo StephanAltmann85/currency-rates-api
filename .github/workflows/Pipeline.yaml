@@ -24,7 +24,7 @@ jobs:
   Composer-Audit:
     uses: ./.github/workflows/composer-audit.yaml
     with:
-      CURRENT_PHP_VERSION: "${{ steps.init.outputs.PHP_VERSION }}"
+      CURRENT_PHP_VERSION: "${{ jobs.Init.steps.init.outputs.dir }}"
 
   Lint-Yaml:
     needs:

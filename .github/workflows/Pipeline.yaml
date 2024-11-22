@@ -12,13 +12,13 @@ env:
   PREVIOUS_PHP_VERSION: '8.3'
 
 jobs:
-  Init-Variables:
+  Init:
     runs-on: ubuntu-latest
     outputs:
       CURRENT_PHP_VERSION: ${{ steps.init.outputs.CURRENT_PHP_VERSION }}
       PREVIOUS_PHP_VERSION: ${{ steps.init.outputs.PREVIOUS_PHP_VERSION }}
     steps:
-      - name: Init
+      - name: Init Variables
         id: init
         run: |
           echo $CURRENT_PHP_VERSION
@@ -26,9 +26,11 @@ jobs:
           echo "PREVIOUS_PHP_VERSION=$PREVIOUS_PHP_VERSION" >> $GITHUB_OUTPUT
 
   Composer-Audit:
+    needs:
+      - Init
     uses: ./.github/workflows/composer-audit.yaml
     with:
-      CURRENT_PHP_VERSION: "8.4"
+      CURRENT_PHP_VERSION: ${{ needs.Init.outputs.CURRENT_PHP_VERSION }}
 
   Lint-Yaml:
     needs:

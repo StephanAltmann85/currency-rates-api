@@ -10,11 +10,11 @@ use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ClientContext implements Context
+readonly class ClientContext implements Context
 {
     public function __construct(
         /** @var MockHttpClient */
-        private readonly HttpClientInterface $httpClient,
+        private HttpClientInterface $httpClient,
     ) {
     }
 

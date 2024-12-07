@@ -24,8 +24,6 @@ class CurrencyRatesUpdateCommandTest extends TestCase
     /** @phpstan-var CollectionPersister|MockInterface  */
     private CollectionPersister $persister;
 
-    private Command $command;
-
     private CommandTester $tester;
 
     protected function setUp(): void
@@ -33,16 +31,16 @@ class CurrencyRatesUpdateCommandTest extends TestCase
         $this->collector = \Mockery::mock(Collector::class);
         $this->persister = \Mockery::mock(CollectionPersister::class);
 
-        $command = new CurrencyRatesUpdateCommand(
+        $currencyRatesUpdateCommand = new CurrencyRatesUpdateCommand(
             $this->collector,
             $this->persister
         );
 
         $application = new Application();
-        $application->add($command);
-        $this->command = $application->find('currency-rates:update');
+        $application->add($currencyRatesUpdateCommand);
+        $command = $application->find('currency-rates:update');
 
-        $this->tester = new CommandTester($this->command);
+        $this->tester = new CommandTester($command);
     }
 
     public function testRun(): void

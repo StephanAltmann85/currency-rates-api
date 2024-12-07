@@ -11,11 +11,11 @@ use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;
 use Webmozart\Assert\Assert;
 
-class CurrencyContext implements Context
+readonly class CurrencyContext implements Context
 {
     public function __construct(
-        private readonly CurrencyRepository $currencyRepository,
-        private readonly EntityManagerInterface $entityManager,
+        private CurrencyRepository $currencyRepository,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 

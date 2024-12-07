@@ -19,6 +19,9 @@ class CurrencyRateHistoryTest extends SetterGetterTestCase
         $this->performSetterGetterCalls($setter, $getter, $value, $expectTypeError);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function testGetId(): void
     {
         $currencyRateHistory = new CurrencyRateHistory();

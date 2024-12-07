@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class DatabaseContext implements Context
 {
-    public const FIXTURES_BASE_PATH = __DIR__.'/../../TestData/Fixtures/';
+    public const string FIXTURES_BASE_PATH = __DIR__.'/../../TestData/Fixtures/';
 
     /** @phpstan-var ClassMetadata<Currency|CurrencyRateHistory>[]  */
     private array $classes;

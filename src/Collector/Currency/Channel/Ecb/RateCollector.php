@@ -18,7 +18,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RateCollector implements RateCollectorInterface
 {
-    private const RESOURCE_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
+    private const string RESOURCE_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
 
     public function __construct(
         private readonly HttpClientInterface $client,

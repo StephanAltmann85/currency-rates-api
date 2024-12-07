@@ -11,15 +11,15 @@ use Doctrine\Common\Collections\Collection;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
-readonly class Collector
+class Collector
 {
     /**
      * @param RateCollectorInterface[] $collectors
      */
     public function __construct(
         #[AutowireIterator('currency.rate_collector', defaultPriorityMethod: 'getPriority')]
-        private iterable $collectors,
-        private LoggerInterface $currencyRatesUpdateLogger,
+        private readonly iterable $collectors,
+        private readonly LoggerInterface $currencyRatesUpdateLogger,
     ) {
     }
 

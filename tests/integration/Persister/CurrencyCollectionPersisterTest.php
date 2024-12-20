@@ -12,6 +12,8 @@ use App\Persister\CurrencyCollectionPersister;
 use App\Tests\integration\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -48,7 +50,8 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
     }
 
     /**
-     * @throws ToolsException
+     * @throws OptimisticLockException
+     * @throws ORMException
      */
     public function testPersist(): void
     {
@@ -65,7 +68,7 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
 
         $currency2->setRate(2);
 
-        $currencies = new ArrayCollection([$currency1, $currency2, $currency3]);
+        $currencies = new ArrayCollection(['TS1' => $currency1, 'TS2' => $currency2, 'TS3' => $currency3]);
 
         $this->persister->persist($currencies);
 

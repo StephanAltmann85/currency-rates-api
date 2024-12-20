@@ -31,7 +31,7 @@ class Collector
     }
 
     /**
-     * @return Collection<int, Currency>
+     * @return Collection<string, Currency>
      */
     public function collect(?string $channel = null): Collection
     {
@@ -69,6 +69,21 @@ class Collector
             $currencies = new ArrayCollection(array_merge($currencies->toArray(), $currencyRates->toArray()));
         }
 
-        return $currencies;
+        return $this->removeDuplicates($currencies);
+    }
+
+    /**
+     * @param Collection<int, Currency> $currencies
+     * @return Collection<string, Currency>
+     */
+    private function removeDuplicates(Collection $currencies): Collection
+    {
+        $result = new ArrayCollection();
+
+        foreach ($currencies as $currency) {
+            $result->set($currency->getIso3(), $currency);
+        }
+
+        return $result;
     }
 }

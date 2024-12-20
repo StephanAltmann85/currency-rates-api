@@ -8,6 +8,7 @@ use App\Collector\Currency\Channel\Ecb\RateCollector;
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\Collector;
+use App\Collector\Currency\Filter\CurrencyRateAttributeFilter;
 use App\Entity\Currency;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Repository\CurrencyRepository;
@@ -32,6 +33,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(RateCollector::class)]
 #[CoversClass(CurrencyRate::class)]
 #[CoversClass(GetRatesResponse::class)]
+#[CoversClass(CurrencyRateAttributeFilter::class)]
 #[UsesClass(CurrencyRepository::class)]
 #[UsesClass(CurrencyUpdateEventListener::class)]
 #[UsesClass(Currency::class)]

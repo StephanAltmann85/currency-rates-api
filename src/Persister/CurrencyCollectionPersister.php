@@ -14,7 +14,7 @@ readonly class CurrencyCollectionPersister implements CollectionPersister
     {
     }
 
-    /** @param Collection<int, Currency> $collection */
+    /** @param Collection<string, Currency> $collection */
     public function persist(Collection $collection): void
     {
         foreach ($collection as $currency) {

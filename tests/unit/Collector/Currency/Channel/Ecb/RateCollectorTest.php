@@ -39,17 +39,13 @@ class RateCollectorTest extends MockeryTestCase
     /** @phpstan-var ValidatorInterface|MockInterface  */
     private ValidatorInterface $validator;
 
-    /** @phpstan-var CurrencyRepository|MockInterface  */
-    private CurrencyRepository $currencyRepository;
-
     public function setUp(): void
     {
         $this->client = new MockHttpClient();
         $this->serializer = \Mockery::mock(SerializerInterface::class);
         $this->validator = \Mockery::mock(ValidatorInterface::class);
-        $this->currencyRepository = \Mockery::mock(CurrencyRepository::class);
 
-        $this->rateCollector = new RateCollector($this->client, $this->serializer, $this->validator, $this->currencyRepository);
+        $this->rateCollector = new RateCollector($this->client, $this->serializer, $this->validator);
 
         parent::setUp();
     }
@@ -127,18 +123,6 @@ class RateCollectorTest extends MockeryTestCase
             ->once()
             ->andReturn(2);
 
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
-            ->once()
-            ->with('USD')
-            ->andReturn($currency1);
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
-            ->once()
-            ->with('TWD')
-            ->andReturn($currency2);
-
         $currency1
             ->shouldReceive('setRate')
             ->once()
@@ -170,10 +154,6 @@ class RateCollectorTest extends MockeryTestCase
 
         $this->validator
             ->shouldReceive('validate')
-            ->never();
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
             ->never();
 
         $this->expectException(TransportException::class);
@@ -215,10 +195,6 @@ class RateCollectorTest extends MockeryTestCase
             ->shouldReceive('count')
             ->once()
             ->andReturn(1);
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
-            ->never();
 
         $this->expectException(ValidationException::class);
 

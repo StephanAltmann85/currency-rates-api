@@ -10,10 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CurrencyRate implements CurrencyRateInterface
 {
+    #[Assert\NotNull]
     #[Assert\Length(exactly: 3)]
     #[SerializedName('@currency')]
     private string $iso3;
 
+    #[Assert\NotNull]
     #[Assert\Positive]
     #[SerializedName('@rate')]
     private float $rate;

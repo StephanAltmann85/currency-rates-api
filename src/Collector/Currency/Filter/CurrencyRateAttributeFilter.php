@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Collector\Currency\Filter;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Dto\CurrencyRateInterface;
 use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
 use App\Collector\Currency\Filter\Enum\FilterType;
 use Doctrine\Common\Collections\Collection;
@@ -14,10 +15,10 @@ readonly class CurrencyRateAttributeFilter implements AttributeFilter
 {
     /**
      * @param object $attributedClass
-     * @param Collection<int, CurrencyRate> $data
-     * @return Collection<int, CurrencyRate>
+     * @param Collection<int, CurrencyRateInterface> $data
+     * @return Collection<int, CurrencyRateInterface>
      *
-     * @template-extends AttributeFilter<int, CurrencyRate>
+     * @template-extends AttributeFilter<int, CurrencyRateInterface>
      */
     public function filter(object $attributedClass, Collection $data): Collection
     {
@@ -43,24 +44,24 @@ readonly class CurrencyRateAttributeFilter implements AttributeFilter
     }
 
     /**
-     * @param Collection<int, CurrencyRate> $currencyRates
+     * @param Collection<int, CurrencyRateInterface> $currencyRates
      * @param string[] $values
-     * @return Collection<int, CurrencyRate>
+     * @return Collection<int, CurrencyRateInterface>
      */
     private function filterBlacklist(Collection $currencyRates, array $values): Collection {
         return $currencyRates->filter(
-            fn (CurrencyRate $currencyRate) => false === in_array($currencyRate->getIso3(), $values, true)
+            fn (CurrencyRateInterface $currencyRate) => false === in_array($currencyRate->getIso3(), $values, true)
         );
     }
 
     /**
-     * @param Collection<int, CurrencyRate> $currencyRates
+     * @param Collection<int, CurrencyRateInterface> $currencyRates
      * @param string[] $values
-     * @return Collection<int, CurrencyRate>
+     * @return Collection<int, CurrencyRateInterface>
      */
     private function filterWhitelist(Collection $currencyRates, array $values): Collection {
         return $currencyRates->filter(
-            fn (CurrencyRate $currencyRate) => true === in_array($currencyRate->getIso3(), $values, true)
+            fn (CurrencyRateInterface $currencyRate) => true === in_array($currencyRate->getIso3(), $values, true)
         );
     }
 }

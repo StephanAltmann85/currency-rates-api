@@ -15,24 +15,21 @@ use App\Repository\CurrencyRepository;
 use App\Tests\integration\Mock\Collector\Currency\Channel\RateCollectorBlacklistFilter;
 use App\Tests\integration\Mock\Collector\Currency\Channel\RateCollectorNoFilter;
 use App\Tests\integration\Mock\Collector\Currency\Channel\RateCollectorWhitelistFilter;
-use App\Tests\integration\Mock\MockedRateCollector;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Mockery;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\UsesClass;
-use PHPUnit\Framework\MockObject\Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 #[CoversClass(CurrencyRateAttributeFilter::class)]
 #[CoversClass(CurrencyRateAttributeFilter::class)]
-#[UsesClass(Collector::class)]
-#[UsesClass(CurrencyRate::class)]
-#[UsesClass(GetRatesResponse::class)]
-#[UsesClass(CurrencyRepository::class)]
-#[UsesClass(CurrencyUpdateEventListener::class)]
-#[UsesClass(Currency::class)]
+#[CoversClass(Collector::class)]
+#[CoversClass(CurrencyRate::class)]
+#[CoversClass(GetRatesResponse::class)]
+#[CoversClass(CurrencyRepository::class)]
+#[CoversClass(CurrencyUpdateEventListener::class)]
+#[CoversClass(Currency::class)]
 class CollectorWithAttributeFilterTest extends KernelTestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -47,7 +44,7 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
 
         $this->logger = $container->get(LoggerInterface::class);
 
-        /** @var CurrencyRepository $repository */
+        /* @var CurrencyRepository $repository */
         $this->repository = $container->get(CurrencyRepository::class);
 
         parent::setUp();
@@ -59,7 +56,7 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
             [
                 new RateCollectorNoFilter(),
                 new RateCollectorWhitelistFilter(),
-                new RateCollectorBlacklistFilter()
+                new RateCollectorBlacklistFilter(),
             ],
             $this->logger,
             $this->repository,
@@ -81,7 +78,7 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
 
     public function testCollectWithEmptyResult(): void
     {
-        $rateCollector = Mockery::mock(RateCollector::class);
+        $rateCollector = \Mockery::mock(RateCollector::class);
 
         $collector = new Collector(
             [$rateCollector],

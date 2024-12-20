@@ -17,13 +17,12 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 #[CoversClass(CurrencyCollectionPersister::class)]
 #[CoversClass(CurrencyUpdateEventListener::class)]
-#[UsesClass(Currency::class)]
-#[UsesClass(CurrencyRateHistory::class)]
+#[CoversClass(Currency::class)]
+#[CoversClass(CurrencyRateHistory::class)]
 class CurrencyCollectionPersisterTest extends KernelTestCase
 {
     use DatabaseTrait;

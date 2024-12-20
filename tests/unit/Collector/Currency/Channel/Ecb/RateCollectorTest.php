@@ -12,7 +12,6 @@ use App\Collector\Exception\CollectDataException;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
 use App\Entity\Currency;
-use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;

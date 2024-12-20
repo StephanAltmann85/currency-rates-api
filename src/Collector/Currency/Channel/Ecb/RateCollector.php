@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency\Channel\Ecb;
 
-use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
-use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
-use App\Collector\Currency\Filter\Enum\FilterType;
 use App\Collector\Currency\RateCollectorInterface;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
-use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\SerializerInterface;

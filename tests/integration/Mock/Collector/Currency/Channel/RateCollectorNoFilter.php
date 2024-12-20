@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\Collection;
 
 class RateCollectorNoFilter implements RateCollectorInterface
 {
-
     public function collect(): Collection
     {
         return new ArrayCollection(
@@ -21,7 +20,7 @@ class RateCollectorNoFilter implements RateCollectorInterface
                 (new CurrencyRate())->setIso3('CR3')->setRate(1),
                 (new CurrencyRate())->setIso3('CR4')->setRate(1),
                 (new CurrencyRate())->setIso3('CR5')->setRate(1),
-                (new CurrencyRate())->setIso3('CR6')->setRate(1)
+                (new CurrencyRate())->setIso3('CR6')->setRate(1),
             ]
         );
     }

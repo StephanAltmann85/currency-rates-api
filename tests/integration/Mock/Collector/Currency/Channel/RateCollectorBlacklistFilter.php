@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\integration\Mock\Collector\Currency\Channel;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
-use App\Collector\Currency\Dto\CurrencyRateInterface;
 use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
 use App\Collector\Currency\Filter\Enum\FilterType;
 use App\Collector\Currency\RateCollectorInterface;

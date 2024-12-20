@@ -30,9 +30,9 @@ class CurrencyRateTest extends SetterGetterTestCase
     {
         return [
             ['setRate', 'getRate', 1.2],
-            ['setRate', 'getRate', null],
+            ['setRate', 'getRate', null, true],
             ['setIso3', 'getIso3', 'USD'],
-            ['setIso3', 'getIso3', null],
+            ['setIso3', 'getIso3', null, true],
         ];
     }
 }

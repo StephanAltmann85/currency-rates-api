@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\Collection;
 #[CurrencyRateFilter(FilterType::WHITELIST, ['CR3', 'CR4', 'CR5', 'CR6'])]
 class RateCollectorWhitelistFilter implements RateCollectorInterface
 {
-
     public function collect(): Collection
     {
         return new ArrayCollection(
@@ -24,7 +23,7 @@ class RateCollectorWhitelistFilter implements RateCollectorInterface
                 (new CurrencyRate())->setIso3('CR3')->setRate(2),
                 (new CurrencyRate())->setIso3('CR4')->setRate(2),
                 (new CurrencyRate())->setIso3('CR5')->setRate(2),
-                (new CurrencyRate())->setIso3('CR6')->setRate(2)
+                (new CurrencyRate())->setIso3('CR6')->setRate(2),
             ]
         );
     }

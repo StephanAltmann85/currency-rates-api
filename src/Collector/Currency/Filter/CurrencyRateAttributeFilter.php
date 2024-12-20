@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency\Filter;
 
-use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Dto\CurrencyRateInterface;
 use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
 use App\Collector\Currency\Filter\Enum\FilterType;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ReadableCollection;
 
 readonly class CurrencyRateAttributeFilter implements AttributeFilter
 {
     /**
-     * @param object $attributedClass
      * @param Collection<int, CurrencyRateInterface> $data
+     *
      * @return Collection<int, CurrencyRateInterface>
      *
      * @template-extends AttributeFilter<int, CurrencyRateInterface>
@@ -25,7 +23,7 @@ readonly class CurrencyRateAttributeFilter implements AttributeFilter
         $reflection = new \ReflectionClass($attributedClass);
         $filterAttributes = $reflection->getAttributes(CurrencyRateFilter::class);
 
-        if(true === empty($filterAttributes)) {
+        if (true === empty($filterAttributes)) {
             return $data;
         }
 
@@ -36,7 +34,7 @@ readonly class CurrencyRateAttributeFilter implements AttributeFilter
         /** @var string[] $values */
         $values = $filterAttribute->getArguments()[1];
 
-        if($type === FilterType::BLACKLIST) {
+        if (FilterType::BLACKLIST === $type) {
             return $this->filterBlacklist($data, $values);
         }
 
@@ -45,23 +43,27 @@ readonly class CurrencyRateAttributeFilter implements AttributeFilter
 
     /**
      * @param Collection<int, CurrencyRateInterface> $currencyRates
-     * @param string[] $values
+     * @param string[]                               $values
+     *
      * @return Collection<int, CurrencyRateInterface>
      */
-    private function filterBlacklist(Collection $currencyRates, array $values): Collection {
+    private function filterBlacklist(Collection $currencyRates, array $values): Collection
+    {
         return $currencyRates->filter(
-            fn (CurrencyRateInterface $currencyRate) => false === in_array($currencyRate->getIso3(), $values, true)
+            fn (CurrencyRateInterface $currencyRate) => false === \in_array($currencyRate->getIso3(), $values, true)
         );
     }
 
     /**
      * @param Collection<int, CurrencyRateInterface> $currencyRates
-     * @param string[] $values
+     * @param string[]                               $values
+     *
      * @return Collection<int, CurrencyRateInterface>
      */
-    private function filterWhitelist(Collection $currencyRates, array $values): Collection {
+    private function filterWhitelist(Collection $currencyRates, array $values): Collection
+    {
         return $currencyRates->filter(
-            fn (CurrencyRateInterface $currencyRate) => true === in_array($currencyRate->getIso3(), $values, true)
+            fn (CurrencyRateInterface $currencyRate) => true === \in_array($currencyRate->getIso3(), $values, true)
         );
     }
 }

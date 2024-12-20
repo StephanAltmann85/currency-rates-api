@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Collector\Currency;
 
 use App\Collector\Currency\Dto\CurrencyRateInterface;
-use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
-use App\Collector\Currency\Filter\CurrencyRateAttributeFilter;
-use App\Collector\Currency\Filter\Enum\FilterType;
+use App\Collector\Currency\Filter\AttributeFilter;
 use App\Collector\Exception\CollectDataException;
 use App\Entity\Currency;
 use App\Repository\CurrencyRepository;
@@ -26,7 +24,7 @@ class Collector
         private readonly iterable $collectors,
         private readonly LoggerInterface $currencyRatesUpdateLogger,
         private readonly CurrencyRepository $currencyRepository,
-        private readonly CurrencyRateAttributeFilter $filter,
+        private readonly AttributeFilter $filter,
     ) {
     }
 
@@ -60,10 +58,10 @@ class Collector
 
             $currencyRates = $result->map(
                 fn (CurrencyRateInterface $currencyRate) => $this->currencyRepository->findOrCreate(
-                        $currencyRate->getIso3()
-                    )
-                    ->setRate($currencyRate->getRate()
+                    $currencyRate->getIso3()
                 )
+                    ->setRate($currencyRate->getRate()
+                    )
             );
 
             $currencies = new ArrayCollection(array_merge($currencies->toArray(), $currencyRates->toArray()));
@@ -74,6 +72,7 @@ class Collector
 
     /**
      * @param Collection<int, Currency> $currencies
+     *
      * @return Collection<string, Currency>
      */
     private function removeDuplicates(Collection $currencies): Collection

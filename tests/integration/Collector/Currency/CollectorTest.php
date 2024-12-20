@@ -20,7 +20,6 @@ use Doctrine\ORM\Tools\ToolsException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -34,9 +33,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(CurrencyRate::class)]
 #[CoversClass(GetRatesResponse::class)]
 #[CoversClass(CurrencyRateAttributeFilter::class)]
-#[UsesClass(CurrencyRepository::class)]
-#[UsesClass(CurrencyUpdateEventListener::class)]
-#[UsesClass(Currency::class)]
+#[CoversClass(CurrencyRepository::class)]
+#[CoversClass(CurrencyUpdateEventListener::class)]
+#[CoversClass(Currency::class)]
 class CollectorTest extends KernelTestCase
 {
     use DatabaseTrait;

@@ -6,6 +6,8 @@ namespace App\Collector\Currency\Channel\Ecb;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
+use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
+use App\Collector\Currency\Filter\Enum\FilterType;
 use App\Collector\Currency\RateCollectorInterface;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
@@ -24,7 +26,6 @@ class RateCollector implements RateCollectorInterface
         private readonly HttpClientInterface $client,
         private readonly SerializerInterface $serializer,
         private readonly ValidatorInterface $validator,
-        private readonly CurrencyRepository $currencyRepository,
     ) {
     }
 
@@ -49,10 +50,7 @@ class RateCollector implements RateCollectorInterface
             throw new ValidationException(GetRatesResponse::class, $violations);
         }
 
-        return $response->getCurrencyRates()->map(
-            /** @phpstan-ignore-next-line */
-            fn (CurrencyRate $currencyRate) => $this->currencyRepository->findOrCreate($currencyRate->getIso3())->setRate($currencyRate->getRate())
-        );
+        return $response->getCurrencyRates();
     }
 
     public function getChannel(): string

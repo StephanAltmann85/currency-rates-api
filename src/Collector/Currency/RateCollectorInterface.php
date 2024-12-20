@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency;
 
+use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Exception\CollectDataException;
 use App\Entity\Currency;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +16,7 @@ interface RateCollectorInterface
     /**
      * @throws CollectDataException
      *
-     * @phpstan-return Collection<int, Currency>
+     * @phpstan-return Collection<int, CurrencyRate>
      */
     public function collect(): Collection;
 

@@ -220,12 +220,15 @@ class CollectorTest extends MockeryTestCase
             $this->currencyRateAttributeFilter
         );
 
+        $currencyRate1 = \Mockery::mock(CurrencyRateInterface::class);
         $currency1 = \Mockery::mock(Currency::class);
+
+        $collection1 = new ArrayCollection([$currencyRate1]);
 
         $rateCollector1
             ->shouldReceive('collect')
             ->once()
-            ->andReturn(new ArrayCollection([$currency1]));
+            ->andReturn($collection1);
 
         $rateCollector1
             ->shouldReceive('getChannel')
@@ -250,6 +253,39 @@ class CollectorTest extends MockeryTestCase
             ->once()
             ->andReturn('NO');
 
+        $this->currencyRateAttributeFilter
+            ->shouldReceive('filter')
+            ->once()
+            ->with($rateCollector1, $collection1)
+            ->andReturn($collection1);
+
+        $currencyRate1
+            ->shouldReceive('getIso3')
+            ->once()
+            ->andReturn('CR1');
+
+        $currencyRate1
+            ->shouldReceive('getRate')
+            ->once()
+            ->andReturn(1);
+
+        $currency1
+            ->shouldReceive('getIso3')
+            ->once()
+            ->andReturn('CR1');
+
+        $currency1
+            ->shouldReceive('setRate')
+            ->once()
+            ->with(1)
+            ->andReturnSelf();
+
+        $this->currencyRepository
+            ->shouldReceive('findOrCreate')
+            ->once()
+            ->with('CR1')
+            ->andReturn($currency1);
+
         $this->logger
             ->shouldReceive('error')
             ->never();
@@ -257,6 +293,6 @@ class CollectorTest extends MockeryTestCase
         $result = $collector->collect('TEST');
 
         $this->assertCount(1, $result);
-        $this->assertEquals($currency1, $result->get(0));
+        $this->assertEquals($currency1, $result->get('CR1'));
     }
 }

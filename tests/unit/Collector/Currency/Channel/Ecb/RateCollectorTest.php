@@ -11,7 +11,6 @@ use App\Collector\Currency\RateCollectorInterface;
 use App\Collector\Exception\CollectDataException;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
-use App\Entity\Currency;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -68,8 +67,6 @@ class RateCollectorTest extends MockeryTestCase
         $constraintViolationList = \Mockery::mock(ConstraintViolationListInterface::class);
         $currencyRate1 = \Mockery::mock(CurrencyRate::class);
         $currencyRate2 = \Mockery::mock(CurrencyRate::class);
-        $currency1 = \Mockery::mock(Currency::class);
-        $currency2 = \Mockery::mock(Currency::class);
 
         $currencyRatesCollection = new ArrayCollection([$currencyRate1, $currencyRate2]);
 
@@ -102,41 +99,11 @@ class RateCollectorTest extends MockeryTestCase
             ->once()
             ->andReturn($currencyRatesCollection);
 
-        $currencyRate1
-            ->shouldReceive('getIso3')
-            ->once()
-            ->andReturn('USD');
-
-        $currencyRate1
-            ->shouldReceive('getRate')
-            ->once()
-            ->andReturn(1);
-
-        $currencyRate2
-            ->shouldReceive('getIso3')
-            ->once()
-            ->andReturn('TWD');
-
-        $currencyRate2
-            ->shouldReceive('getRate')
-            ->once()
-            ->andReturn(2);
-
-        $currency1
-            ->shouldReceive('setRate')
-            ->once()
-            ->with(1);
-
-        $currency2
-            ->shouldReceive('setRate')
-            ->once()
-            ->with(2);
-
         $result = $this->rateCollector->collect();
 
         $this->assertCount(2, $result);
-        $this->assertEquals($currency1, $result->get(0));
-        $this->assertEquals($currency2, $result->get(1));
+        $this->assertEquals($currencyRate1, $result->get(0));
+        $this->assertEquals($currencyRate2, $result->get(1));
     }
 
     /**

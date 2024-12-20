@@ -25,7 +25,7 @@ class CurrencyRate implements CurrencyRateInterface
         return $this->iso3;
     }
 
-    public function setIso3(string $iso3): CurrencyRate
+    public function setIso3(string $iso3): CurrencyRateInterface
     {
         $this->iso3 = $iso3;
 
@@ -37,7 +37,7 @@ class CurrencyRate implements CurrencyRateInterface
         return $this->rate;
     }
 
-    public function setRate(float|int $rate): CurrencyRate
+    public function setRate(float|int $rate): CurrencyRateInterface
     {
         $this->rate = (float) $rate;
 

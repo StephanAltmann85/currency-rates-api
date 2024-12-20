@@ -69,7 +69,7 @@ class CurrencyUpdateEventListenerTest extends MockeryTestCase
             ->shouldReceive('getEntityChangeSet')
             ->once()
             ->with($currency1)
-            ->andReturn(null);
+            ->andReturn([]);
 
         $unitOfWork
             ->shouldReceive('getEntityChangeSet')

@@ -17,7 +17,7 @@ use App\Tests\integration\Mock\Collector\Currency\Channel\RateCollectorNoFilter;
 use App\Tests\integration\Mock\Collector\Currency\Channel\RateCollectorWhitelistFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -32,7 +32,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 #[CoversClass(Currency::class)]
 class CollectorWithAttributeFilterTest extends KernelTestCase
 {
-    use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+    use MockeryPHPUnitIntegration;
 
     private LoggerInterface $logger;
     private CurrencyRepository $repository;
@@ -42,10 +42,14 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
         self::bootKernel();
         $container = static::getContainer();
 
-        $this->logger = $container->get(LoggerInterface::class);
+        /** @var LoggerInterface $logger */
+        $logger = $container->get(LoggerInterface::class);
 
-        /* @var CurrencyRepository $repository */
-        $this->repository = $container->get(CurrencyRepository::class);
+        /** @phpstan-var CurrencyRepository $repository */
+        $repository = $container->get(CurrencyRepository::class);
+
+        $this->logger = $logger;
+        $this->repository = $repository;
 
         parent::setUp();
     }
@@ -68,12 +72,12 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertContainsOnlyInstancesOf(Currency::class, $result);
         $this->assertCount(6, $result);
-        $this->assertEquals(1, $result->get('CR1')->getRate());
-        $this->assertEquals(1, $result->get('CR2')->getRate());
-        $this->assertEquals(2, $result->get('CR3')->getRate());
-        $this->assertEquals(2, $result->get('CR4')->getRate());
-        $this->assertEquals(3, $result->get('CR5')->getRate());
-        $this->assertEquals(3, $result->get('CR6')->getRate());
+        $this->assertEquals(1, $result->get('CR1')?->getRate());
+        $this->assertEquals(1, $result->get('CR2')?->getRate());
+        $this->assertEquals(2, $result->get('CR3')?->getRate());
+        $this->assertEquals(2, $result->get('CR4')?->getRate());
+        $this->assertEquals(3, $result->get('CR5')?->getRate());
+        $this->assertEquals(3, $result->get('CR6')?->getRate());
     }
 
     public function testCollectWithEmptyResult(): void

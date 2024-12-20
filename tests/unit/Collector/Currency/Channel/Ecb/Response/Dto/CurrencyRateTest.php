@@ -24,7 +24,7 @@ class CurrencyRateTest extends SetterGetterTestCase
     }
 
     /**
-     * @phpstan-return array<array<int, string|float|null>>
+     * @phpstan-return array<array<int, string|float|bool|null>>
      */
     public static function setterGetterProvider(): array
     {

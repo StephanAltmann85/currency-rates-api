@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Collector\Currency\Channel\Ecb\Response;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
-use App\Collector\Currency\Dto\CurrencyRateInterface;
+use App\Collector\Currency\Response\CurrencyRateInterface;
+use App\Collector\Currency\Response\CurrencyRateResponseInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Attribute\SerializedPath;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GetRatesResponse
+class GetRatesResponse implements CurrencyRateResponseInterface
 {
     /** @phpstan-var Collection<int, CurrencyRateInterface>  */
     #[Assert\Valid]
@@ -27,7 +28,6 @@ class GetRatesResponse
         $this->currencyRates = new ArrayCollection();
     }
 
-    /** @phpstan-return Collection<int,CurrencyRateInterface> */
     public function getCurrencyRates(): Collection
     {
         return $this->currencyRates;
@@ -60,5 +60,10 @@ class GetRatesResponse
         $this->time = $time;
 
         return $this;
+    }
+
+    public function getValidationGroups(): ?array
+    {
+        return null;
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\unit\Collector\Currency;
 
 use App\Collector\Currency\Collector;
-use App\Collector\Currency\Dto\CurrencyRateInterface;
 use App\Collector\Currency\Filter\AttributeFilter;
 use App\Collector\Currency\RateCollectorInterface;
+use App\Collector\Currency\Response\CurrencyRateInterface;
 use App\Collector\Exception\TransportException;
 use App\Entity\Currency;
 use App\Repository\CurrencyRepository;

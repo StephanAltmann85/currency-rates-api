@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\Collector\Currency;
 
+use App\Client\Client;
 use App\Collector\Currency\Channel\Ecb\RateCollector;
+use App\Collector\Currency\Channel\Ecb\Request\GetRatesRequest;
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\Collector;
 use App\Collector\Currency\Filter\CurrencyRateAttributeFilter;
+use App\Collector\Currency\Validation\Validator;
 use App\Entity\Currency;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Repository\CurrencyRepository;
@@ -30,11 +33,14 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[CoversClass(Collector::class)]
+#[CoversClass(CurrencyRepository::class)]
 #[CoversClass(RateCollector::class)]
 #[CoversClass(CurrencyRate::class)]
-#[CoversClass(GetRatesResponse::class)]
-#[CoversClass(CurrencyRepository::class)]
-#[CoversClass(Currency::class)]
+#[UsesClass(GetRatesResponse::class)]
+#[UsesClass(Currency::class)]
+#[UsesClass(Validator::class)]
+#[UsesClass(Client::class)]
+#[UsesClass(GetRatesRequest::class)]
 #[UsesClass(CurrencyRateAttributeFilter::class)]
 #[UsesClass(CurrencyUpdateEventListener::class)]
 class CollectorTest extends KernelTestCase

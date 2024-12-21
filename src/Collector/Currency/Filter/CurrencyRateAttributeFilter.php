@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency\Filter;
 
-use App\Collector\Currency\Dto\CurrencyRateInterface;
 use App\Collector\Currency\Filter\Attribute\CurrencyRateFilter;
 use App\Collector\Currency\Filter\Enum\FilterType;
+use App\Collector\Currency\Response\CurrencyRateInterface;
 use Doctrine\Common\Collections\Collection;
 
 readonly class CurrencyRateAttributeFilter implements AttributeFilter

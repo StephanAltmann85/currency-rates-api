@@ -25,10 +25,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 #[CoversClass(CurrencyRateAttributeFilter::class)]
 #[CoversClass(Collector::class)]
-#[CoversClass(CurrencyRate::class)]
-#[CoversClass(GetRatesResponse::class)]
-#[CoversClass(CurrencyRepository::class)]
-#[CoversClass(Currency::class)]
+#[UsesClass(CurrencyRate::class)]
+#[UsesClass(GetRatesResponse::class)]
+#[UsesClass(CurrencyRepository::class)]
+#[UsesClass(Currency::class)]
 #[UsesClass(CurrencyUpdateEventListener::class)]
 class CollectorWithAttributeFilterTest extends KernelTestCase
 {

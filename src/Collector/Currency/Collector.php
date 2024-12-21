@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency;
 
-use App\Collector\Currency\Dto\CurrencyRateInterface;
 use App\Collector\Currency\Filter\AttributeFilter;
+use App\Collector\Currency\Response\CurrencyRateInterface;
 use App\Collector\Exception\CollectDataException;
 use App\Entity\Currency;
 use App\Repository\CurrencyRepository;

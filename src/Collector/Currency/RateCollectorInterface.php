@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency;
 
-use App\Collector\Currency\Dto\CurrencyRateInterface;
+use App\Collector\Currency\Response\CurrencyRateInterface;
 use App\Collector\Exception\CollectDataException;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;

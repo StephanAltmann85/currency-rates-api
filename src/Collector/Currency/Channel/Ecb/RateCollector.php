@@ -4,47 +4,46 @@ declare(strict_types=1);
 
 namespace App\Collector\Currency\Channel\Ecb;
 
-use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
+use App\Client\ClientInterface;
+use App\Collector\Currency\Channel\Ecb\Request\GetRatesRequest;
 use App\Collector\Currency\RateCollectorInterface;
+use App\Collector\Currency\Response\CurrencyRateResponseInterface;
+use App\Collector\Currency\Validation\ValidatorInterface;
 use App\Collector\Exception\TransportException;
-use App\Collector\Exception\ValidationException;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 
 class RateCollector implements RateCollectorInterface
 {
-    private const string RESOURCE_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
-
     public function __construct(
-        private readonly HttpClientInterface $client,
-        private readonly SerializerInterface $serializer,
-        private readonly ValidatorInterface $validator,
+        readonly private ClientInterface $client,
+        readonly private SerializerInterface $serializer,
+        readonly private ValidatorInterface $validator,
     ) {
     }
 
     public function collect(): Collection
     {
-        try {
-            $content = $this->client->request('GET', self::RESOURCE_URL);
+        $request = new GetRatesRequest();
 
+        try {
+            $content = $this->client->request($request);
+
+            /** @var CurrencyRateResponseInterface $response */
             $response = $this->serializer->deserialize(
                 $content->getContent(),
-                GetRatesResponse::class,
+                $request->getResponseClass(),
                 'xml',
                 [XmlEncoder::ROOT_NODE_NAME => 'gesmes:Envelope']
             );
-        } catch (\Throwable $exception) {
+        } catch (ExceptionInterface|UnexpectedValueException $exception) {
             throw new TransportException($exception->getMessage(), $exception->getCode(), $exception);
         }
 
-        $violations = $this->validator->validate($response);
-
-        if ($violations->count() > 0) {
-            throw new ValidationException(GetRatesResponse::class, $violations);
-        }
+        $this->validator->validate($response, $response->getValidationGroups());
 
         return $response->getCurrencyRates();
     }

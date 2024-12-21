@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Collector\Currency\Dto;
+namespace App\Collector\Currency\Response;
 
 interface CurrencyRateInterface
 {

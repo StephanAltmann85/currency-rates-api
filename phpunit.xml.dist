@@ -30,5 +30,8 @@
     <include>
       <directory>src</directory>
     </include>
+    <exclude>
+      <file>src/Collector/Currency/Filter/Attribute/CurrencyRateFilter.php</file>
+    </exclude>
   </source>
 </phpunit>

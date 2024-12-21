@@ -19,17 +19,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-#[CoversClass(CurrencyRateAttributeFilter::class)]
 #[CoversClass(CurrencyRateAttributeFilter::class)]
 #[CoversClass(Collector::class)]
 #[CoversClass(CurrencyRate::class)]
 #[CoversClass(GetRatesResponse::class)]
 #[CoversClass(CurrencyRepository::class)]
-#[CoversClass(CurrencyUpdateEventListener::class)]
 #[CoversClass(Currency::class)]
+#[UsesClass(CurrencyUpdateEventListener::class)]
 class CollectorWithAttributeFilterTest extends KernelTestCase
 {
     use MockeryPHPUnitIntegration;

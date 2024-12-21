@@ -12,7 +12,7 @@ use App\Collector\Currency\Filter\CurrencyRateAttributeFilter;
 use App\Entity\Currency;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Repository\CurrencyRepository;
-use App\Tests\integration\Helper\Trait\DatabaseTrait;
+use App\Tests\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -20,6 +20,7 @@ use Doctrine\ORM\Tools\ToolsException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -32,10 +33,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[CoversClass(RateCollector::class)]
 #[CoversClass(CurrencyRate::class)]
 #[CoversClass(GetRatesResponse::class)]
-#[CoversClass(CurrencyRateAttributeFilter::class)]
 #[CoversClass(CurrencyRepository::class)]
-#[CoversClass(CurrencyUpdateEventListener::class)]
 #[CoversClass(Currency::class)]
+#[UsesClass(CurrencyRateAttributeFilter::class)]
+#[UsesClass(CurrencyUpdateEventListener::class)]
 class CollectorTest extends KernelTestCase
 {
     use DatabaseTrait;
@@ -44,7 +45,7 @@ class CollectorTest extends KernelTestCase
 
     private Collector $collector;
 
-    /** @phpstan-var LoggerInterface|MockObject)  */
+    /** @phpstan-var LoggerInterface|MockObject */
     private LoggerInterface $logger;
 
     private FilesystemOperator $testDataStorage;

@@ -23,6 +23,9 @@
       <directory phpVersion="8.3.0" phpVersionOperator="&gt;=">tests/integration</directory>
     </testsuite>
   </testsuites>
+  <extensions>
+    <bootstrap class="Zenstruck\Foundry\PHPUnit\FoundryExtension"/>
+  </extensions>
   <source>
     <include>
       <directory>src</directory>

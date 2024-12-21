@@ -9,7 +9,7 @@ use App\Entity\CurrencyRateHistory;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Persister\CollectionPersister;
 use App\Persister\CurrencyCollectionPersister;
-use App\Tests\integration\Helper\Trait\DatabaseTrait;
+use App\Tests\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;

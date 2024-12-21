@@ -57,9 +57,7 @@ class Collector
             $result = $this->filter->filter($collector, $result);
 
             $currencyRates = $result->map(
-                fn (CurrencyRateInterface $currencyRate) => $this->currencyRepository->findOrCreate(
-                    $currencyRate->getIso3()
-                )
+                fn (CurrencyRateInterface $currencyRate): Currency => $this->currencyRepository->findOrCreate($currencyRate->getIso3())
                     ->setRate($currencyRate->getRate()
                     )
             );

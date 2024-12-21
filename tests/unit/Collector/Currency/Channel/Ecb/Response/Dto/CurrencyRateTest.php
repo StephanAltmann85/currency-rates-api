@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\unit\Collector\Currency\Channel\Ecb\Response\Dto;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
-use App\Tests\unit\TestCases\SetterGetterTestCase;
+use App\Tests\Helper\TestCases\SetterGetterTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 

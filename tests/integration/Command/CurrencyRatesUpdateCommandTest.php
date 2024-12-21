@@ -223,6 +223,9 @@ class CurrencyRatesUpdateCommandTest extends KernelTestCase
         $this->assertCount(1, $this->entityManager->getRepository(Currency::class)->findAll());
     }
 
+    /**
+     * @throws FilesystemException
+     */
     public function testCommandOutputWithVerboseOption(): void
     {
         $mockResponse = new MockResponse($this->testDataStorage->read('Responses/eurofxref-daily.xml'));

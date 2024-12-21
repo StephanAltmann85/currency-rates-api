@@ -32,10 +32,6 @@ class CurrencyUpdateEventListener
 
             $changeSet = $unitOfWork->getEntityChangeSet($updatedEntity);
 
-            if (!\is_array($changeSet)) {
-                continue;
-            }
-
             /** @phpstan-var array<string, array<int, mixed>> $changeSet */
             if (false === \array_key_exists('rate', $changeSet) || false === \array_key_exists(0, $changeSet['rate']) || false === is_numeric($changeSet['rate'][0])) {
                 continue;

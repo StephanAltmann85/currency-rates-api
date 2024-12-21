@@ -6,7 +6,7 @@ namespace App\Tests\unit\Collector\Currency\Channel\Ecb\Response;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
-use App\Tests\unit\TestCases\SetterGetterTestCase;
+use App\Tests\Helper\TestCases\SetterGetterTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -20,6 +20,7 @@ class GetRatesResponseTest extends SetterGetterTestCase
 
         $this->assertNull($response->getTime());
         $this->assertInstanceOf(ArrayCollection::class, $response->getCurrencyRates());
+        $this->assertNull($response->getValidationGroups());
     }
 
     #[DataProvider('setterGetterProvider')]

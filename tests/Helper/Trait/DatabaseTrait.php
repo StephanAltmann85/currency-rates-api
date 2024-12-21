@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\integration\Helper\Trait;
+namespace App\Tests\Helper\Trait;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;

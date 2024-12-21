@@ -4,34 +4,35 @@ declare(strict_types=1);
 
 namespace App\Tests\unit\Collector\Currency\Channel\Ecb;
 
+use App\Client\ClientInterface;
 use App\Collector\Currency\Channel\Ecb\RateCollector;
+use App\Collector\Currency\Channel\Ecb\Request\GetRatesRequest;
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
 use App\Collector\Currency\Channel\Ecb\Response\GetRatesResponse;
 use App\Collector\Currency\RateCollectorInterface;
+use App\Collector\Currency\Validation\ValidatorInterface;
 use App\Collector\Exception\CollectDataException;
 use App\Collector\Exception\TransportException;
 use App\Collector\Exception\ValidationException;
-use App\Entity\Currency;
-use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Symfony\Component\HttpClient\MockHttpClient;
-use Symfony\Component\HttpClient\Response\MockResponse;
+use PHPUnit\Framework\Attributes\UsesClass;
+use Symfony\Component\HttpClient\Exception\TransportException as HttpTransportException;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 #[CoversClass(RateCollector::class)]
+#[UsesClass(GetRatesRequest::class)]
 class RateCollectorTest extends MockeryTestCase
 {
     private RateCollectorInterface $rateCollector;
 
-    /** @phpstan-var MockHttpClient  */
-    private HttpClientInterface $client;
+    /** @phpstan-var ClientInterface|MockInterface  */
+    private ClientInterface $client;
 
     /** @phpstan-var SerializerInterface|MockInterface  */
     private SerializerInterface $serializer;
@@ -39,17 +40,13 @@ class RateCollectorTest extends MockeryTestCase
     /** @phpstan-var ValidatorInterface|MockInterface  */
     private ValidatorInterface $validator;
 
-    /** @phpstan-var CurrencyRepository|MockInterface  */
-    private CurrencyRepository $currencyRepository;
-
     public function setUp(): void
     {
-        $this->client = new MockHttpClient();
+        $this->client = \Mockery::mock(ClientInterface::class);
         $this->serializer = \Mockery::mock(SerializerInterface::class);
         $this->validator = \Mockery::mock(ValidatorInterface::class);
-        $this->currencyRepository = \Mockery::mock(CurrencyRepository::class);
 
-        $this->rateCollector = new RateCollector($this->client, $this->serializer, $this->validator, $this->currencyRepository);
+        $this->rateCollector = new RateCollector($this->client, $this->serializer, $this->validator);
 
         parent::setUp();
     }
@@ -69,17 +66,29 @@ class RateCollectorTest extends MockeryTestCase
      */
     public function testCollect(): void
     {
+        $httpResponse = \Mockery::mock(ResponseInterface::class);
         $response = \Mockery::mock(GetRatesResponse::class);
         $constraintViolationList = \Mockery::mock(ConstraintViolationListInterface::class);
         $currencyRate1 = \Mockery::mock(CurrencyRate::class);
         $currencyRate2 = \Mockery::mock(CurrencyRate::class);
-        $currency1 = \Mockery::mock(Currency::class);
-        $currency2 = \Mockery::mock(Currency::class);
 
         $currencyRatesCollection = new ArrayCollection([$currencyRate1, $currencyRate2]);
 
         $this->client
-            ->setResponseFactory(new MockResponse('{"response":"content"}'));
+            ->shouldReceive('request')
+            ->once()
+            ->with(\Mockery::type(GetRatesRequest::class))
+            ->andReturn($httpResponse);
+
+        $httpResponse
+            ->shouldReceive('getContent')
+            ->once()
+            ->andReturn('{"response":"content"}');
+
+        $response
+            ->shouldReceive('getValidationGroups')
+            ->once()
+            ->andReturn(null);
 
         $this->serializer
             ->shouldReceive('deserialize')
@@ -97,63 +106,16 @@ class RateCollectorTest extends MockeryTestCase
             ->once()
             ->andReturn($constraintViolationList);
 
-        $constraintViolationList
-            ->shouldReceive('count')
-            ->once()
-            ->andReturn(0);
-
         $response
             ->shouldReceive('getCurrencyRates')
             ->once()
             ->andReturn($currencyRatesCollection);
 
-        $currencyRate1
-            ->shouldReceive('getIso3')
-            ->once()
-            ->andReturn('USD');
-
-        $currencyRate1
-            ->shouldReceive('getRate')
-            ->once()
-            ->andReturn(1);
-
-        $currencyRate2
-            ->shouldReceive('getIso3')
-            ->once()
-            ->andReturn('TWD');
-
-        $currencyRate2
-            ->shouldReceive('getRate')
-            ->once()
-            ->andReturn(2);
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
-            ->once()
-            ->with('USD')
-            ->andReturn($currency1);
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
-            ->once()
-            ->with('TWD')
-            ->andReturn($currency2);
-
-        $currency1
-            ->shouldReceive('setRate')
-            ->once()
-            ->with(1);
-
-        $currency2
-            ->shouldReceive('setRate')
-            ->once()
-            ->with(2);
-
         $result = $this->rateCollector->collect();
 
         $this->assertCount(2, $result);
-        $this->assertEquals($currency1, $result->get(0));
-        $this->assertEquals($currency2, $result->get(1));
+        $this->assertEquals($currencyRate1, $result->get(0));
+        $this->assertEquals($currencyRate2, $result->get(1));
     }
 
     /**
@@ -161,8 +123,13 @@ class RateCollectorTest extends MockeryTestCase
      */
     public function testCollectWithExceptionCausedByClient(): void
     {
+        $exception = new HttpTransportException('Error', 500);
+
         $this->client
-            ->setResponseFactory(new MockResponse('{"response":"content"}', ['http_code' => 500]));
+            ->shouldReceive('request')
+            ->once()
+            ->with(\Mockery::type(GetRatesRequest::class))
+            ->andThrows($exception);
 
         $this->serializer
             ->shouldReceive('deserialize')
@@ -170,10 +137,6 @@ class RateCollectorTest extends MockeryTestCase
 
         $this->validator
             ->shouldReceive('validate')
-            ->never();
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
             ->never();
 
         $this->expectException(TransportException::class);
@@ -186,14 +149,26 @@ class RateCollectorTest extends MockeryTestCase
      */
     public function testCollectWithConstraintViolations(): void
     {
+        $httpResponse = \Mockery::mock(ResponseInterface::class);
         $response = \Mockery::mock(GetRatesResponse::class);
         $constraintViolationList = \Mockery::mock(ConstraintViolationListInterface::class);
+        $exception = new ValidationException('Error', $constraintViolationList);
 
         $this->client
-            ->setResponseFactory(new MockResponse('{"response":"content"}', ['http_code' => 500]));
+            ->shouldReceive('request')
+            ->once()
+            ->with(\Mockery::type(GetRatesRequest::class))
+            ->andReturn($httpResponse);
 
-        $this->client
-            ->setResponseFactory(new MockResponse('{"response":"content"}'));
+        $httpResponse
+            ->shouldReceive('getContent')
+            ->once()
+            ->andReturn('{"response":"content"}');
+
+        $response
+            ->shouldReceive('getValidationGroups')
+            ->once()
+            ->andReturn(null);
 
         $this->serializer
             ->shouldReceive('deserialize')
@@ -209,16 +184,7 @@ class RateCollectorTest extends MockeryTestCase
         $this->validator
             ->shouldReceive('validate')
             ->once()
-            ->andReturn($constraintViolationList);
-
-        $constraintViolationList
-            ->shouldReceive('count')
-            ->once()
-            ->andReturn(1);
-
-        $this->currencyRepository
-            ->shouldReceive('findOrCreate')
-            ->never();
+            ->andThrows($exception);
 
         $this->expectException(ValidationException::class);
 

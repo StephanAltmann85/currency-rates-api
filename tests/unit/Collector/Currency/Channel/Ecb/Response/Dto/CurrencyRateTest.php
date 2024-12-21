@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\unit\Collector\Currency\Channel\Ecb\Response\Dto;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
-use App\Tests\unit\TestCases\SetterGetterTestCase;
+use App\Tests\Helper\TestCases\SetterGetterTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -24,15 +24,15 @@ class CurrencyRateTest extends SetterGetterTestCase
     }
 
     /**
-     * @phpstan-return array<array<int, string|float|null>>
+     * @phpstan-return array<array<int, string|float|bool|null>>
      */
     public static function setterGetterProvider(): array
     {
         return [
             ['setRate', 'getRate', 1.2],
-            ['setRate', 'getRate', null],
+            ['setRate', 'getRate', null, true],
             ['setIso3', 'getIso3', 'USD'],
-            ['setIso3', 'getIso3', null],
+            ['setIso3', 'getIso3', null, true],
         ];
     }
 }

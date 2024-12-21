@@ -6,7 +6,7 @@ namespace App\Tests\unit\Entity;
 
 use App\Entity\Currency;
 use App\Entity\CurrencyRateHistory;
-use App\Tests\unit\TestCases\SetterGetterTestCase;
+use App\Tests\Helper\TestCases\SetterGetterTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 

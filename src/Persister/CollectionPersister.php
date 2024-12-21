@@ -11,7 +11,7 @@ interface CollectionPersister
     /**
      * @phpstan-template T
      *
-     * @phpstan-param Collection<int, T> $collection
+     * @phpstan-param Collection<string, T> $collection
      */
     public function persist(Collection $collection): void;
 }

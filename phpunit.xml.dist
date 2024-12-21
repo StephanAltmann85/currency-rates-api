@@ -17,15 +17,21 @@
   </php>
   <testsuites>
     <testsuite name="unit">
-      <directory phpVersion="8.2.0" phpVersionOperator="&gt;=">tests/unit</directory>
+      <directory phpVersion="8.3.0" phpVersionOperator="&gt;=">tests/unit</directory>
     </testsuite>
     <testsuite name="integration">
-      <directory phpVersion="8.2.0" phpVersionOperator="&gt;=">tests/integration</directory>
+      <directory phpVersion="8.3.0" phpVersionOperator="&gt;=">tests/integration</directory>
     </testsuite>
   </testsuites>
+  <extensions>
+    <bootstrap class="Zenstruck\Foundry\PHPUnit\FoundryExtension"/>
+  </extensions>
   <source>
     <include>
       <directory>src</directory>
     </include>
+    <exclude>
+      <file>src/Collector/Currency/Filter/Attribute/CurrencyRateFilter.php</file>
+    </exclude>
   </source>
 </phpunit>

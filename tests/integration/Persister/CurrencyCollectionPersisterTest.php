@@ -9,19 +9,22 @@ use App\Entity\CurrencyRateHistory;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Persister\CollectionPersister;
 use App\Persister\CurrencyCollectionPersister;
-use App\Tests\integration\Helper\Trait\DatabaseTrait;
+use App\Tests\Helper\Trait\DatabaseTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Uid\Uuid;
 
 #[CoversClass(CurrencyCollectionPersister::class)]
-#[CoversClass(CurrencyUpdateEventListener::class)]
-#[UsesClass(Currency::class)]
-#[UsesClass(CurrencyRateHistory::class)]
+#[CoversClass(Currency::class)]
+#[CoversClass(CurrencyRateHistory::class)]
+#[UsesClass(CurrencyUpdateEventListener::class)]
 class CurrencyCollectionPersisterTest extends KernelTestCase
 {
     use DatabaseTrait;
@@ -48,7 +51,8 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
     }
 
     /**
-     * @throws ToolsException
+     * @throws OptimisticLockException
+     * @throws ORMException
      */
     public function testPersist(): void
     {
@@ -65,7 +69,7 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
 
         $currency2->setRate(2);
 
-        $currencies = new ArrayCollection([$currency1, $currency2, $currency3]);
+        $currencies = new ArrayCollection(['TS1' => $currency1, 'TS2' => $currency2, 'TS3' => $currency3]);
 
         $this->persister->persist($currencies);
 
@@ -73,6 +77,7 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
         $this->entityManager->refresh($currency2);
         $this->entityManager->refresh($currency3);
 
+        $this->assertEquals('TS1', $currency1->getIso3());
         $this->assertEquals('2000-01-01', $currency1->getUpdatedAt()->format('Y-m-d'));
         $this->assertEmpty($currency1->getHistory());
 
@@ -81,12 +86,17 @@ class CurrencyCollectionPersisterTest extends KernelTestCase
         /** @var \DateTime $currency2RateHistoryDate */
         $currency2RateHistoryDate = $currency2RateHistory->getDate();
 
+        $this->assertEquals(2, $currency2->getRate());
+        $this->assertEquals('TS2', $currency2->getIso3());
         $this->assertNotEquals('2000-01-01', $currency2->getUpdatedAt()->format('Y-m-d'));
         $this->assertEquals('2000-01-01', $currency2RateHistoryDate->format('Y-m-d'));
         $this->assertNotEmpty($currency2->getHistory());
+        $this->assertTrue(Uuid::isValid((string) $currency2RateHistory->getId()));
 
         $this->assertEquals('2001-01-01', $currency3->getUpdatedAt()->format('Y-m-d'));
         $this->assertEmpty($currency3->getHistory());
+        $this->assertEquals(1, $currency3->getRate());
+        $this->assertEquals('TS3', $currency3->getIso3());
     }
 
     /**

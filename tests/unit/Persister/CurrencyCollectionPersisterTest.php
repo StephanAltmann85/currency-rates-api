@@ -22,8 +22,8 @@ class CurrencyCollectionPersisterTest extends MockeryTestCase
 
         $currency1 = \Mockery::mock(Currency::class);
         $currency2 = \Mockery::mock(Currency::class);
-        /** @phpstan-var Collection<int, Currency> $currencyCollection */
-        $currencyCollection = new ArrayCollection([$currency1, $currency2]);
+        /** @phpstan-var Collection<string, Currency> $currencyCollection */
+        $currencyCollection = new ArrayCollection(['cr1' => $currency1, 'cr2' => $currency2]);
 
         $entityManager
             ->shouldReceive('persist')

@@ -10,10 +10,8 @@
         "api-platform/core": "^4.0",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
-        "doctrine/orm": "^2.19",
+        "doctrine/orm": "^3.1",
         "nelmio/cors-bundle": "^2.5",
-        "phpdocumentor/reflection-docblock": "^5.4",
-        "phpstan/phpdoc-parser": "^1.30",
         "symfony/asset": "^7.1",
         "symfony/console": "^7.1",
         "symfony/dotenv": "^7.1",
@@ -38,18 +36,20 @@
         "dvdoug/behat-code-coverage": "^5.3",
         "friends-of-behat/symfony-extension": "^2.5",
         "friendsofphp/php-cs-fixer": "^3.45",
-        "hautelook/alice-bundle": "^2.13",
+        "hautelook/alice-bundle": "^2.14",
         "league/flysystem-bundle": "^3.3",
         "mockery/mockery": "^1.6",
         "phpstan/extension-installer": "^1.3",
         "phpstan/phpstan": "^1.10",
+        "phpstan/phpdoc-parser": "^1.30",
         "phpstan/phpstan-doctrine": "^1.5",
         "phpstan/phpstan-mockery": "^1.1",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpstan/phpstan-symfony": "^1.3",
         "phpunit/phpunit": "^11.0",
         "symfony/maker-bundle": "^1.52",
-        "symfony/phpunit-bridge": "^7.1"
+        "symfony/phpunit-bridge": "^7.1",
+        "zenstruck/foundry": "^2.3"
     },
     "config": {
         "allow-plugins": {
@@ -96,16 +96,21 @@
             "php vendor/bin/phpstan"
         ],
         "phpcs": [
-            "php vendor/bin/php-cs-fixer fix"
+            "PHP_CS_FIXER_IGNORE_ENV=1 php vendor/bin/php-cs-fixer fix"
         ],
         "test-units": [
             "XDEBUG_MODE=coverage php vendor/bin/phpunit --testsuite unit --coverage-html coverage_unit"
         ],
         "test-integration": [
-            "XDEBUG_MODE=coverage php vendor/bin/phpunit --testsuite integration"
+            "XDEBUG_MODE=coverage php vendor/bin/phpunit --testsuite integration --coverage-html coverage_integration"
         ],
         "test-behat": [
             "XDEBUG_MODE=coverage php vendor/bin/behat"
+        ],
+        "db": [
+            "php bin/console doctrine:database:drop --if-exists --force",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate --no-interaction"
         ]
     },
     "conflict": {

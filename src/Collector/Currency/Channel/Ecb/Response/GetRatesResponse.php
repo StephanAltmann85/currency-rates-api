@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Collector\Currency\Channel\Ecb\Response;
 
 use App\Collector\Currency\Channel\Ecb\Response\Dto\CurrencyRate;
+use App\Collector\Currency\Response\CurrencyRateInterface;
+use App\Collector\Currency\Response\CurrencyRateResponseInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Attribute\SerializedPath;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GetRatesResponse
+class GetRatesResponse implements CurrencyRateResponseInterface
 {
-    /** @phpstan-var Collection<int, CurrencyRate>  */
+    /** @phpstan-var Collection<int, CurrencyRateInterface>  */
     #[Assert\Valid]
     #[SerializedPath('[Cube][Cube][Cube]')]
     private Collection $currencyRates;
@@ -26,13 +28,12 @@ class GetRatesResponse
         $this->currencyRates = new ArrayCollection();
     }
 
-    /** @phpstan-return Collection<int,CurrencyRate> */
     public function getCurrencyRates(): Collection
     {
         return $this->currencyRates;
     }
 
-    /** @phpstan-param CurrencyRate[] $currencyRates */
+    /** @phpstan-param CurrencyRateInterface[] $currencyRates */
     public function setCurrencyRates(array $currencyRates): GetRatesResponse
     {
         $this->currencyRates = new ArrayCollection($currencyRates);
@@ -59,5 +60,10 @@ class GetRatesResponse
         $this->time = $time;
 
         return $this;
+    }
+
+    public function getValidationGroups(): ?array
+    {
+        return null;
     }
 }

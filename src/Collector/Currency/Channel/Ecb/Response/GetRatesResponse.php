@@ -36,7 +36,11 @@ class GetRatesResponse implements CurrencyRateResponseInterface
     /** @phpstan-param CurrencyRateInterface[] $currencyRates */
     public function setCurrencyRates(array $currencyRates): GetRatesResponse
     {
-        $this->currencyRates = new ArrayCollection($currencyRates);
+        $this->currencyRates = new ArrayCollection();
+
+        foreach ($currencyRates as $currencyRate) {
+            $this->addCurrencyRate($currencyRate);
+        }
 
         return $this;
     }

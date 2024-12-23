@@ -16,7 +16,6 @@ Feature: Command - currency-rates:update
         <Cube>
             <Cube time='2024-01-04'>
                 <Cube currency='TST' rate='1.5'/>
-                <Cube currency='USD' rate='1.0953'/>
             </Cube>
         </Cube>
     </gesmes:Envelope>

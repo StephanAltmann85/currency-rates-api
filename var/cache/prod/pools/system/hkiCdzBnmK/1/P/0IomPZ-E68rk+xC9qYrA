@@ -1,0 +1,825 @@
+<?php //resource_metadata_collection_742541eaf5ce3fce
+
+return [PHP_INT_MAX, new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['ApiPlatform\\Metadata\\ApiResource'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\ApiResource')),
+        clone ($p['ApiPlatform\\Metadata\\Operations'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Operations')),
+        clone ($p['ApiPlatform\\Metadata\\GetCollection'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\GetCollection')),
+        clone ($p['ApiPlatform\\Doctrine\\Orm\\State\\Options'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Doctrine\\Orm\\State\\Options')),
+        clone ($p['ApiPlatform\\Metadata\\Link'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Link')),
+        clone ($p['ApiPlatform\\Metadata\\NotExposed'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\NotExposed')),
+        clone $p['ApiPlatform\\Doctrine\\Orm\\State\\Options'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+    ],
+    null,
+    [
+        'ApiPlatform\\Metadata\\ApiResource' => [
+            'shortName' => [
+                'CurrencyRateHistory',
+            ],
+            'class' => [
+                'App\\Entity\\CurrencyRateHistory',
+            ],
+            'description' => [
+                null,
+            ],
+            'urlGenerationStrategy' => [
+                null,
+            ],
+            'deprecationReason' => [
+                null,
+            ],
+            'normalizationContext' => [
+                [
+                    'groups' => [
+                        'history:get',
+                    ],
+                ],
+            ],
+            'denormalizationContext' => [
+                null,
+            ],
+            'collectDenormalizationErrors' => [
+                null,
+            ],
+            'validationContext' => [
+                null,
+            ],
+            'filters' => [
+                null,
+            ],
+            'order' => [
+                [
+                    'date' => 'DESC',
+                ],
+            ],
+            'fetchPartial' => [
+                null,
+            ],
+            'forceEager' => [
+                null,
+            ],
+            'paginationEnabled' => [
+                null,
+            ],
+            'paginationType' => [
+                null,
+            ],
+            'paginationItemsPerPage' => [
+                null,
+            ],
+            'paginationMaximumItemsPerPage' => [
+                null,
+            ],
+            'paginationPartial' => [
+                null,
+            ],
+            'paginationClientEnabled' => [
+                null,
+            ],
+            'paginationClientItemsPerPage' => [
+                null,
+            ],
+            'paginationClientPartial' => [
+                null,
+            ],
+            'paginationFetchJoinCollection' => [
+                null,
+            ],
+            'paginationUseOutputWalkers' => [
+                null,
+            ],
+            'security' => [
+                null,
+            ],
+            'securityMessage' => [
+                null,
+            ],
+            'securityPostDenormalize' => [
+                null,
+            ],
+            'securityPostDenormalizeMessage' => [
+                null,
+            ],
+            'securityPostValidation' => [
+                null,
+            ],
+            'securityPostValidationMessage' => [
+                null,
+            ],
+            'stateOptions' => [
+                null,
+            ],
+            'rules' => [
+                null,
+            ],
+            'queryParameterValidationEnabled' => [
+                null,
+            ],
+            'strictQueryParameterValidation' => [
+                null,
+            ],
+            'hideHydraOperation' => [
+                null,
+            ],
+            'jsonStream' => [
+                null,
+            ],
+            'extraProperties' => [
+                [
+                    'standard_put' => true,
+                    'rfc_7807_compliant_errors' => true,
+                ],
+            ],
+            'operations' => [
+                $o[1],
+            ],
+            'uriTemplate' => [
+                null,
+            ],
+            'types' => [
+                null,
+            ],
+            'formats' => [
+                [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+            ],
+            'inputFormats' => [
+                null,
+            ],
+            'outputFormats' => [
+                null,
+            ],
+            'uriVariables' => [
+                [
+                    'id' => $o[8],
+                ],
+            ],
+            'routePrefix' => [
+                null,
+            ],
+            'defaults' => [
+                null,
+            ],
+            'requirements' => [
+                null,
+            ],
+            'options' => [
+                null,
+            ],
+            'stateless' => [
+                true,
+            ],
+            'sunset' => [
+                null,
+            ],
+            'acceptPatch' => [
+                null,
+            ],
+            'status' => [
+                null,
+            ],
+            'host' => [
+                null,
+            ],
+            'schemes' => [
+                null,
+            ],
+            'condition' => [
+                null,
+            ],
+            'controller' => [
+                null,
+            ],
+            'headers' => [
+                null,
+            ],
+            'cacheHeaders' => [
+                [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+            ],
+            'hydraContext' => [
+                null,
+            ],
+            'openapi' => [
+                null,
+            ],
+            'paginationViaCursor' => [
+                null,
+            ],
+            'compositeIdentifier' => [
+                null,
+            ],
+            'exceptionToStatus' => [
+                null,
+            ],
+            'links' => [
+                null,
+            ],
+            'graphQlOperations' => [
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Metadata' => [
+            'policy' => [
+                null,
+                2 => null,
+                5 => null,
+            ],
+            'middleware' => [
+                null,
+                2 => null,
+                5 => null,
+            ],
+            'map' => [
+                null,
+                2 => null,
+                5 => null,
+            ],
+            'rules' => [
+                2 => null,
+                5 => null,
+            ],
+            'queryParameterValidationEnabled' => [
+                2 => null,
+                5 => null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Operations' => [
+            'operations' => [
+                1 => [
+                    [
+                        '_api_/currencies/{iso3}/history_get_collection',
+                        $o[2],
+                    ],
+                    [
+                        '_api_/currency_rate_histories/{id}{._format}_get',
+                        $o[5],
+                    ],
+                ],
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Operation' => [
+            'shortName' => [
+                2 => 'CurrencyRateHistory',
+                5 => 'CurrencyRateHistory',
+            ],
+            'class' => [
+                2 => 'App\\Entity\\CurrencyRateHistory',
+                5 => 'App\\Entity\\CurrencyRateHistory',
+            ],
+            'description' => [
+                2 => null,
+                5 => null,
+            ],
+            'urlGenerationStrategy' => [
+                2 => null,
+                5 => null,
+            ],
+            'deprecationReason' => [
+                2 => null,
+                5 => null,
+            ],
+            'normalizationContext' => [
+                2 => [
+                    'groups' => [
+                        'history:get',
+                    ],
+                ],
+                5 => [
+                    'groups' => [
+                        'history:get',
+                    ],
+                ],
+            ],
+            'denormalizationContext' => [
+                2 => null,
+                5 => null,
+            ],
+            'collectDenormalizationErrors' => [
+                2 => null,
+                5 => null,
+            ],
+            'validationContext' => [
+                2 => null,
+                5 => null,
+            ],
+            'filters' => [
+                2 => [],
+                5 => [],
+            ],
+            'order' => [
+                2 => [
+                    'date' => 'DESC',
+                ],
+                5 => [
+                    'date' => 'DESC',
+                ],
+            ],
+            'fetchPartial' => [
+                2 => null,
+                5 => null,
+            ],
+            'forceEager' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationEnabled' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationType' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationItemsPerPage' => [
+                2 => 28,
+                5 => null,
+            ],
+            'paginationMaximumItemsPerPage' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationPartial' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationClientEnabled' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationClientItemsPerPage' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationClientPartial' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationFetchJoinCollection' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationUseOutputWalkers' => [
+                2 => null,
+                5 => null,
+            ],
+            'security' => [
+                2 => null,
+                5 => null,
+            ],
+            'securityMessage' => [
+                2 => null,
+                5 => null,
+            ],
+            'securityPostDenormalize' => [
+                2 => null,
+                5 => null,
+            ],
+            'securityPostDenormalizeMessage' => [
+                2 => null,
+                5 => null,
+            ],
+            'securityPostValidation' => [
+                2 => null,
+                5 => null,
+            ],
+            'securityPostValidationMessage' => [
+                2 => null,
+                5 => null,
+            ],
+            'provider' => [
+                2 => 'ApiPlatform\\Doctrine\\Orm\\State\\CollectionProvider',
+                5 => 'ApiPlatform\\Doctrine\\Orm\\State\\ItemProvider',
+            ],
+            'processor' => [
+                2 => 'api_platform.doctrine.orm.state.persist_processor',
+                5 => 'api_platform.doctrine.orm.state.persist_processor',
+            ],
+            'stateOptions' => [
+                2 => $o[3],
+                5 => $o[6],
+            ],
+            'jsonStream' => [
+                2 => null,
+                5 => null,
+            ],
+            'extraProperties' => [
+                2 => [
+                    'standard_put' => true,
+                    'rfc_7807_compliant_errors' => true,
+                    'user_defined_uri_template' => true,
+                ],
+                5 => [
+                    'standard_put' => true,
+                    'rfc_7807_compliant_errors' => true,
+                    'generated_operation' => true,
+                ],
+            ],
+            'read' => [
+                2 => null,
+                5 => false,
+            ],
+            'deserialize' => [
+                2 => null,
+                5 => null,
+            ],
+            'validate' => [
+                2 => null,
+                5 => null,
+            ],
+            'write' => [
+                2 => null,
+                5 => null,
+            ],
+            'serialize' => [
+                2 => null,
+                5 => null,
+            ],
+            'priority' => [
+                2 => 0,
+                5 => null,
+            ],
+            'name' => [
+                2 => '_api_/currencies/{iso3}/history_get_collection',
+                5 => '_api_/currency_rate_histories/{id}{._format}_get',
+            ],
+            'output' => [
+                5 => [
+                    'class' => null,
+                ],
+            ],
+        ],
+        'ApiPlatform\\Metadata\\HttpOperation' => [
+            'strictQueryParameterValidation' => [
+                2 => null,
+                5 => null,
+            ],
+            'paginationViaCursor' => [
+                2 => null,
+                5 => null,
+            ],
+            'formats' => [
+                2 => [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+                5 => [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+            ],
+            'inputFormats' => [
+                2 => [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+                5 => [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+            ],
+            'outputFormats' => [
+                2 => [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+                5 => [
+                    'json' => [
+                        'application/json',
+                    ],
+                    'csv' => [
+                        'text/csv',
+                    ],
+                ],
+            ],
+            'method' => [
+                2 => 'GET',
+                5 => 'GET',
+            ],
+            'uriTemplate' => [
+                2 => '/currencies/{iso3}/history',
+                5 => '/currency_rate_histories/{id}{._format}',
+            ],
+            'types' => [
+                2 => null,
+                5 => null,
+            ],
+            'uriVariables' => [
+                2 => [
+                    'iso3' => $o[4],
+                ],
+                5 => [
+                    'id' => $o[7],
+                ],
+            ],
+            'routePrefix' => [
+                2 => null,
+                5 => null,
+            ],
+            'routeName' => [
+                2 => null,
+                5 => null,
+            ],
+            'defaults' => [
+                2 => null,
+                5 => null,
+            ],
+            'requirements' => [
+                2 => [
+                    'iso3' => '[A-Z]{3}',
+                ],
+                5 => null,
+            ],
+            'options' => [
+                2 => null,
+                5 => null,
+            ],
+            'stateless' => [
+                2 => true,
+                5 => true,
+            ],
+            'sunset' => [
+                2 => null,
+                5 => null,
+            ],
+            'acceptPatch' => [
+                2 => null,
+                5 => null,
+            ],
+            'host' => [
+                2 => null,
+                5 => null,
+            ],
+            'schemes' => [
+                2 => null,
+                5 => null,
+            ],
+            'condition' => [
+                2 => null,
+                5 => null,
+            ],
+            'controller' => [
+                2 => null,
+                5 => 'api_platform.action.not_exposed',
+            ],
+            'headers' => [
+                2 => null,
+                5 => null,
+            ],
+            'cacheHeaders' => [
+                2 => [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+                5 => [
+                    'vary' => [
+                        'Content-Type',
+                        'Authorization',
+                        'Origin',
+                    ],
+                ],
+            ],
+            'hydraContext' => [
+                2 => null,
+                5 => null,
+            ],
+            'openapi' => [
+                2 => null,
+                5 => false,
+            ],
+            'exceptionToStatus' => [
+                2 => null,
+                5 => null,
+            ],
+            'links' => [
+                2 => null,
+                5 => null,
+            ],
+            'errors' => [
+                2 => null,
+                5 => null,
+            ],
+            'hideHydraOperation' => [
+                5 => null,
+            ],
+            'status' => [
+                5 => 404,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\GetCollection' => [
+            'hideHydraOperation' => [
+                2 => null,
+            ],
+            'itemUriTemplate' => [
+                2 => null,
+            ],
+        ],
+        'ApiPlatform\\Doctrine\\Common\\State\\Options' => [
+            'handleLinks' => [
+                3 => 'api_platform.doctrine.orm.links_handler',
+                6 => 'api_platform.doctrine.orm.links_handler',
+            ],
+        ],
+        'ApiPlatform\\Doctrine\\Orm\\State\\Options' => [
+            'entityClass' => [
+                3 => null,
+                6 => null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Parameter' => [
+            'key' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'schema' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'openApi' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'provider' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'filter' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'property' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'description' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'properties' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'required' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'priority' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'hydra' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'constraints' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'security' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'securityMessage' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'extraProperties' => [
+                4 => [],
+                7 => [],
+                [],
+            ],
+            'filterContext' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'nativeType' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'castToArray' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'castToNativeType' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'castFn' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Link' => [
+            'parameterName' => [
+                4 => 'iso3',
+                7 => 'id',
+                'id',
+            ],
+            'fromProperty' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'toProperty' => [
+                4 => 'currency',
+                7 => null,
+                null,
+            ],
+            'fromClass' => [
+                4 => 'App\\Entity\\Currency',
+                7 => 'App\\Entity\\CurrencyRateHistory',
+                'App\\Entity\\CurrencyRateHistory',
+            ],
+            'toClass' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'identifiers' => [
+                4 => [
+                    'iso3',
+                ],
+                7 => [
+                    'id',
+                ],
+                [
+                    'id',
+                ],
+            ],
+            'compositeIdentifier' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'expandedValue' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+            'securityObjectName' => [
+                4 => null,
+                7 => null,
+                null,
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); } }];

@@ -1,0 +1,48 @@
+<?php //App_Entity_Currency
+
+return [PHP_INT_MAX, new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
+        clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+    ],
+    null,
+    [
+        'Symfony\\Component\\Serializer\\Mapping\\ClassMetadata' => [
+            'name' => [
+                'App\\Entity\\Currency',
+            ],
+            'attributesMetadata' => [
+                [
+                    'iso3' => $o[1],
+                    'rate' => $o[2],
+                    'history' => $o[3],
+                    'updatedAt' => $o[4],
+                ],
+            ],
+        ],
+        'Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata' => [
+            'name' => [
+                1 => 'iso3',
+                'rate',
+                'history',
+                'updatedAt',
+            ],
+            'groups' => [
+                1 => [
+                    'currency:get',
+                ],
+                [
+                    'currency:get',
+                ],
+                4 => [
+                    'currency:get',
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); } }];

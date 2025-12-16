@@ -1,0 +1,34 @@
+# To keep in sync with .gitHub/workflows/tests.yaml
+services:
+    mysql:
+        image: mysql:8.0
+        platform: linux/amd64
+        ports:
+            - 3307:3306
+        environment:
+            # To keep in sync with doctrine-orm-db-settings.php
+            MYSQL_DATABASE: fidry_alice_data_fixtures
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: password
+        # Store data in memory to improve speed
+        tmpfs:
+            - /var/lib/mysql
+        extra_hosts:
+          # Ensure that host.docker.internal is correctly defined on Linux
+          - host.docker.internal:host-gateway
+
+    mongo:
+        image: mongo:7.0
+        ports:
+            - 27018:27017
+        environment:
+            # To keep in sync with doctrine-odm-db-settings.php
+            MONGO_INITDB_DATABASE: fidry_alice_data_fixtures
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+        # Store data in memory to improve speed
+        tmpfs:
+            - /data/db
+        extra_hosts:
+          # Ensure that host.docker.internal is correctly defined on Linux
+          - host.docker.internal:host-gateway

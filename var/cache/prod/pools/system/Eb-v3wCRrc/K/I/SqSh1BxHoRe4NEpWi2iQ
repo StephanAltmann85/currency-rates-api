@@ -1,0 +1,20 @@
+<?php //App.Entity.Currency
+
+return [PHP_INT_MAX, new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        (\Symfony\Component\VarExporter\Internal\Registry::$factories['Symfony\\Component\\Validator\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::f('Symfony\\Component\\Validator\\Mapping\\ClassMetadata'))(),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Validator\\Mapping\\ClassMetadata' => [
+            'name' => [
+                'App\\Entity\\Currency',
+            ],
+            'defaultGroup' => [
+                'Currency',
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); } }];

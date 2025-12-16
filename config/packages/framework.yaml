@@ -1,15 +1,12 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-    handle_all_throwables: true
 
-    session:
-        handler_id: null
-        cookie_secure: auto
-        cookie_samesite: lax
+    # Note that the session will be started ONLY if you read or write from it.
+    session: true
 
-    php_errors:
-        log: true
+    #esi: true
+    #fragments: true
 
 when@test:
     framework:

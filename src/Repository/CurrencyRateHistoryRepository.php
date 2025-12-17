@@ -12,9 +12,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * @extends ServiceEntityRepository<CurrencyRateHistory>
  *
  * @method CurrencyRateHistory|null find($id, $lockMode = null, $lockVersion = null)
- * @method CurrencyRateHistory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CurrencyRateHistory|null findOneBy(mixed[] $criteria, mixed[] $orderBy = null)
  * @method CurrencyRateHistory[]    findAll()
- * @method CurrencyRateHistory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CurrencyRateHistory[]    findBy(mixed[] $criteria, mixed[] $orderBy = null, $limit = null, $offset = null)
  */
 class CurrencyRateHistoryRepository extends ServiceEntityRepository
 {

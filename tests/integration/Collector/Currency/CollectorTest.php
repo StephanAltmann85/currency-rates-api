@@ -16,7 +16,6 @@ use App\Entity\Currency;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Repository\CurrencyRepository;
 use App\Tests\Helper\Trait\DatabaseTrait;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
@@ -101,7 +100,6 @@ class CollectorTest extends KernelTestCase
 
         $result = $this->collector->collect();
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertContainsOnlyInstancesOf(Currency::class, $result);
         $this->assertCount(31, $result);
 
@@ -126,7 +124,6 @@ class CollectorTest extends KernelTestCase
 
         $result = $this->collector->collect();
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertContainsOnlyInstancesOf(Currency::class, $result);
         $this->assertCount(0, $result);
     }
@@ -144,7 +141,6 @@ class CollectorTest extends KernelTestCase
 
         $result = $this->collector->collect();
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertContainsOnlyInstancesOf(Currency::class, $result);
         $this->assertCount(0, $result);
     }
@@ -153,7 +149,6 @@ class CollectorTest extends KernelTestCase
     {
         $result = $this->collector->collect('UNKNOWN');
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(0, $result);
     }
 

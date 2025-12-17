@@ -9,7 +9,6 @@ use Behat\Gherkin\Node\PyStringNode;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Webmozart\Assert\Assert;
 
@@ -17,7 +16,7 @@ class CommandContext implements Context
 {
     private Application $application;
 
-    private OutputInterface|BufferedOutput $output;
+    private BufferedOutput $output;
 
     private ?string $outputString = null;
 
@@ -50,7 +49,6 @@ class CommandContext implements Context
     public function checkOutputContains(PyStringNode $output): void
     {
         if (!isset($this->outputString)) {
-            /* @phpstan-ignore-next-line */
             $this->outputString = $this->output->fetch();
         }
 

@@ -17,7 +17,6 @@ use App\Collector\Exception\CollectDataException;
 use App\Entity\Currency;
 use App\EventListener\CurrencyUpdateEventListener;
 use App\Repository\CurrencyRepository;
-use Doctrine\Common\Collections\Collection;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -79,7 +78,6 @@ class RateCollectorTest extends KernelTestCase
 
         $result = $this->rateCollector->collect();
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertContainsOnlyInstancesOf(CurrencyRateInterface::class, $result);
         $this->assertCount(31, $result);
     }

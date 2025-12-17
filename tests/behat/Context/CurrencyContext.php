@@ -54,7 +54,6 @@ readonly class CurrencyContext implements Context
 
         $currencyRateHistory = $currency->getHistory()->filter(
             fn (CurrencyRateHistory $currencyRateHistory): bool => $currencyRateHistory->getRate() === $rate
-                /* @phpstan-ignore-next-line */
                 && $currencyRateHistory->getDate()->format('Y-m-d H:i:s') === $dateString
         );
 

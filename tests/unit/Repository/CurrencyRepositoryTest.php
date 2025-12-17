@@ -38,6 +38,7 @@ class CurrencyRepositoryTest extends MockeryTestCase
 
     public function testInstantiation(): void
     {
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(CurrencyRepository::class, $this->repository);
     }
 
@@ -67,7 +68,6 @@ class CurrencyRepositoryTest extends MockeryTestCase
 
         $result = $this->repository->findOrCreate('NIL');
 
-        $this->assertInstanceOf(Currency::class, $result);
         $this->assertEquals('NIL', $result->getIso3());
 
         $this->entityManager
@@ -78,7 +78,6 @@ class CurrencyRepositoryTest extends MockeryTestCase
 
         $result = $this->repository->findOrCreate('USD');
 
-        $this->assertInstanceOf(Currency::class, $result);
         $this->assertEquals($currency, $result);
     }
 }

@@ -8,8 +8,8 @@ on:
 name: Pipeline
 
 env:
-  CURRENT_PHP_VERSION: '8.4'
-  PREVIOUS_PHP_VERSION: '8.3'
+  CURRENT_PHP_VERSION: '8.5'
+  PREVIOUS_PHP_VERSION: '8.4'
 
 jobs:
   Init:

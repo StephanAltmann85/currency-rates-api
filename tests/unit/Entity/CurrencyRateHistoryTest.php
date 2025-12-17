@@ -46,7 +46,7 @@ class CurrencyRateHistoryTest extends SetterGetterTestCase
             ['setDate', 'getDate', new \DateTime()],
             ['setDate', 'getDate', null, true],
             ['setCurrency', 'getCurrency', new Currency('TST')],
-            ['setCurrency', 'getCurrency', null],
+            ['setCurrency', 'getCurrency', null, true],
         ];
     }
 }

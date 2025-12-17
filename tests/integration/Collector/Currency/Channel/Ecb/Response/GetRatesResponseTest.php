@@ -12,6 +12,7 @@ use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[CoversClass(GetRatesResponse::class)]
@@ -40,7 +41,7 @@ class GetRatesResponseTest extends KernelTestCase
     }
 
     /**
-     * @throws FilesystemException
+     * @throws FilesystemException|ExceptionInterface
      */
     public function testDeserialization(): void
     {
@@ -48,7 +49,6 @@ class GetRatesResponseTest extends KernelTestCase
 
         $result = $this->serializer->deserialize($content, GetRatesResponse::class, 'xml');
 
-        $this->assertInstanceOf(GetRatesResponse::class, $result);
         $this->assertContainsOnlyInstancesOf(CurrencyRateInterface::class, $result->getCurrencyRates());
         $this->assertCount(31, $result->getCurrencyRates());
         $this->assertEquals(new \DateTime('2024-01-04'), $result->getTime());

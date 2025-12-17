@@ -19,9 +19,9 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 class RateCollector implements RateCollectorInterface
 {
     public function __construct(
-        readonly private ClientInterface $client,
-        readonly private SerializerInterface $serializer,
-        readonly private ValidatorInterface $validator,
+        private readonly ClientInterface $client,
+        private readonly SerializerInterface $serializer,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 

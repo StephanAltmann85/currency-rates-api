@@ -18,7 +18,7 @@ class DatabaseContext implements Context
 {
     public const string FIXTURES_BASE_PATH = __DIR__.'/../../TestData/Fixtures/';
 
-    /** @phpstan-var ClassMetadata<Currency|CurrencyRateHistory>[]  */
+    /** @phpstan-var list<ClassMetadata<Currency|CurrencyRateHistory>>  */
     private array $classes;
 
     public function __construct(

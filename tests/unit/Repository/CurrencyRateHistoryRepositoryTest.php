@@ -18,6 +18,7 @@ class CurrencyRateHistoryRepositoryTest extends MockeryTestCase
 
         $repository = new CurrencyRateHistoryRepository($registry);
 
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(CurrencyRateHistoryRepository::class, $repository);
     }
 }

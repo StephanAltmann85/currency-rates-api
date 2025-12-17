@@ -13,9 +13,9 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 interface RateCollectorInterface
 {
     /**
-     * @throws CollectDataException
-     *
      * @phpstan-return Collection<int, CurrencyRateInterface>
+     *
+     * @throws CollectDataException
      */
     public function collect(): Collection;
 

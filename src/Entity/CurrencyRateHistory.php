@@ -41,34 +41,34 @@ class CurrencyRateHistory
 
     #[ORM\ManyToOne(inversedBy: 'history')]
     #[ORM\JoinColumn(referencedColumnName: 'iso3', nullable: false)]
-    private ?Currency $currency = null;
+    private Currency $currency;
 
     #[Groups(['history:get'])]
     #[ORM\Column]
-    private ?float $rate = null;
+    private float $rate;
 
     #[Groups(['history:get'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    private \DateTimeInterface $date;
 
     public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getCurrency(): ?Currency
+    public function getCurrency(): Currency
     {
         return $this->currency;
     }
 
-    public function setCurrency(?Currency $currency): static
+    public function setCurrency(Currency $currency): static
     {
         $this->currency = $currency;
 
         return $this;
     }
 
-    public function getRate(): ?float
+    public function getRate(): float
     {
         return $this->rate;
     }
@@ -80,7 +80,7 @@ class CurrencyRateHistory
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }

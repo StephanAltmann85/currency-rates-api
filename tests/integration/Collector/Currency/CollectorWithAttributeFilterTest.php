@@ -16,7 +16,6 @@ use App\Tests\Mock\Collector\Currency\Channel\RateCollectorBlacklistFilter;
 use App\Tests\Mock\Collector\Currency\Channel\RateCollectorNoFilter;
 use App\Tests\Mock\Collector\Currency\Channel\RateCollectorWhitelistFilter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
@@ -69,7 +68,6 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
 
         $result = $collector->collect();
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertContainsOnlyInstancesOf(Currency::class, $result);
         $this->assertCount(6, $result);
         $this->assertEquals(1, $result->get('CR1')?->getRate());
@@ -98,7 +96,6 @@ class CollectorWithAttributeFilterTest extends KernelTestCase
 
         $result = $collector->collect();
 
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(0, $result);
     }
 }
